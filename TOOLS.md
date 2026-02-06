@@ -40,6 +40,9 @@
 - #security (1469185394406064283): Threat alerts ONLY
 - #updates (1469185419999580212): Reserved for other use
 - #automations (1469185569081786499): Automation requests (n8n, etc.)
+- #braindump (1469407240820752404): Future ideas / non-urgent items
+- #reminders (1469397446227529801): Centralized reminder channel
+- #learning (1469429009971413023): Educational content and resources
 
 ### Active Monitoring
 
