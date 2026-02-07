@@ -39,10 +39,18 @@
 **Alert Routing:**
 - #security (1469185394406064283): Threat alerts ONLY
 - #updates (1469185419999580212): Reserved for other use
-- #automations (1469185569081786499): Automation requests (n8n, etc.)
+- #automations (1469567086400503839): Automation requests (n8n, etc.)
 - #braindump (1469407240820752404): Future ideas / non-urgent items
 - #reminders (1469397446227529801): Centralized reminder channel
 - #learning (1469429009971413023): Educational content and resources
+- #lead-generation (1469566862403702930): Lead generation tasks and campaigns
+- #sales-and-marketing (1469566918737395818): Sales and marketing tasks
+- #development (1469566955093757993): All development work
+- #prompts (1469566997279936615): Prompt engineering tasks
+- #security-ops (1469567247700725770): Security operations
+- #announcements (1469265052618981457): Announcements
+- #resources (1469265118830399519): Resources for future reference
+- #personal (1469253226539778068): Personal tasks and items
 
 ### Active Monitoring
 
