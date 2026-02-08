@@ -1,0 +1,243 @@
+{
+  "name": "Avania - Lead Import & Enrichment",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "range": "A:AG",
+        "options": {}
+      },
+      "id": "google-sheets-read",
+      "name": "Read New Leads",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [450, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json['Enrichment Status'] }}",
+              "rightValue": "Pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-pending",
+      "name": "Filter Pending",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ 'https://api.linkedin.com/v2/people/(urn:li:person:' + $json['LinkedIn ID'] + ')' }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "linkedin-enrich",
+      "name": "Enrich LinkedIn",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 200],
+      "credentials": {
+        "httpHeaderAuth": "linkedin-api-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ 'https://company.clearbit.com/v2/companies/find?domain=' + $json['Company Website'].replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0] }}",
+        "options": {}
+      },
+      "id": "clearbit-enrich",
+      "name": "Enrich Company",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 400],
+      "credentials": {
+        "httpHeaderAuth": "clearbit-api-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {},
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert B2B sales personalization assistant for a medical device CRO company. Generate personalized opening lines for cold emails."
+          },
+          {
+            "role": "user",
+            "content": "=Given this lead data:\n\nCompany: {{ $json.Company }}\nIndustry: {{ $json.Industry }}\nCompany Description: {{ $json['Company Description'] }}\nRecent News: {{ $json['Recent News'] }}\nPerson: {{ $json['First Name'] }} {{ $json['Last Name'] }}\nTitle: {{ $json.Title }}\nTeam Member: {{ $json['Team Member'] }}\nCampaign: {{ $json.Campaign }}\n\nGenerate 3 personalized opening lines for a cold email. Each should be 1-2 sentences, reference specific details, and lead naturally into a value proposition about regulatory/clinical services for medical devices.\n\nOutput format:\nHook Type: [Funding/FDA/Therapeutic/LinkedIn/Challenge]\nOption 1: [opening line]\nOption 2: [opening line]\nOption 3: [opening line]\nRecommended: [1/2/3]"
+          }
+        ]
+      },
+      "id": "openai-personalize",
+      "name": "AI Personalization",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.8,
+      "position": [1050, 300],
+      "credentials": {
+        "openAiApi": "openai-api-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Enrichment Status": "Complete",
+            "Personalization Hook": "={{ $json['Hook Type'] }}",
+            "Personalized Opening Line": "={{ $json['Selected Opening'] }}",
+            "Status": "Ready",
+            "Last Updated": "={{ $now }}"
+          }
+        },
+        "options": {
+          "valueRenderMode": "UNFORMATTED_VALUE"
+        }
+      },
+      "id": "update-sheets",
+      "name": "Update Lead Database",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1250, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "code-parse-ai",
+      "name": "Parse AI Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, 500],
+      "typeOptions": {
+        "editor": "jsEditor"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read New Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read New Leads": {
+      "main": [
+        [
+          {
+            "node": "Filter Pending",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Pending": {
+      "main": [
+        [
+          {
+            "node": "Enrich LinkedIn",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Enrich Company",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enrich LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "AI Personalization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enrich Company": {
+      "main": [
+        [
+          {
+            "node": "AI Personalization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Personalization": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Output": {
+      "main": [
+        [
+          {
+            "node": "Update Lead Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "pinData": {}
+}

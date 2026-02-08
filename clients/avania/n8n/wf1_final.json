@@ -1,0 +1,143 @@
+{
+  "name": "Avania - Lead Import & Enrichment",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.apollo.io/api/v1/mixed_people/api_search",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"api_key\": \"B0qwKmMAtpBBHBCd5AIfA\", \"person_titles\": [\"VP Regulatory Affairs\", \"Director Regulatory Affairs\", \"VP Quality Assurance\", \"VP Clinical Operations\", \"COO\"], \"organization_locations\": [\"United States\", \"Canada\"], \"organization_num_employees_ranges\": [\"11-50\", \"51-200\", \"201-500\"], \"contact_email_status\": [\"verified\"], \"page\": 1, \"per_page\": 25}",
+        "options": {}
+      },
+      "name": "Apollo Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const people = $json.people || [];\nreturn people.map((person, index) => ({\n  json: {\n    email: person.email || '',\n    firstName: person.first_name || '',\n    lastName: person.last_name || '',\n    company: person.organization?.name || '',\n    title: person.title || '',\n    companySize: person.organization?.estimated_num_employees || '',\n    location: (person.city || '') + ', ' + (person.state || ''),\n    website: person.organization?.website_url || '',\n    linkedinUrl: person.linkedin_url || '',\n    industry: 'Medical Devices',\n    teamMember: 'Catriona',\n    campaign: 'QMSR',\n    status: 'Pending',\n    leadId: 'AV-' + Date.now() + '-' + index\n  }\n}));"
+      },
+      "name": "Format Apollo Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {},
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert B2B sales personalization assistant for Avania Clinical, a medical device CRO company. Generate a personalized opening line for cold emails."
+          },
+          {
+            "role": "user",
+            "content": "=Given:\nCompany: {{ $json.company }}\nPerson: {{ $json.firstName }} {{ $json.lastName }}\nTitle: {{ $json.title }}\nCampaign: QMSR compliance for medical devices\n\nGenerate ONE personalized opening line (1-2 sentences) that mentions their company and naturally leads into QMSR/quality compliance. Be conversational and specific."
+          }
+        ]
+      },
+      "name": "AI Personalization",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.8,
+      "position": [850, 300],
+      "credentials": {
+        "openAiApi": {
+          "apiKey": "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"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const content = $json.message?.content || $json.content || '';\nreturn [{\n  json: {\n    ...$json,\n    personalizedOpening: content.trim(),\n    status: 'Ready'\n  }\n}];"
+      },
+      "name": "Extract Personalization",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://rest.gohighlevel.com/v1/contacts/",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"email\": \"{{ $json.email }}\", \"firstName\": \"{{ $json.firstName }}\", \"lastName\": \"{{ $json.lastName }}\", \"companyName\": \"{{ $json.company }}\", \"jobTitle\": \"{{ $json.title }}\", \"customField\": {\"RbxKguAHbRjqH5K5922f\": {\"linkedin_url\": \"{{ $json.linkedinUrl }}\", \"company_website\": \"{{ $json.website }}\", \"location\": \"{{ $json.location }}\", \"company_size\": \"{{ $json.companySize }}\", \"team_member\": \"{{ $json.teamMember }}\", \"campaign\": \"{{ $json.campaign }}\", \"personalized_opening\": \"{{ $json.personalizedOpening }}\", \"lead_id\": \"{{ $json.leadId }}\", \"status\": \"Ready\", \"apollo_source\": \"true\"}}}",
+        "options": {}
+      },
+      "name": "Create GHL Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 300]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Apollo Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo Search": {
+      "main": [
+        [
+          {
+            "node": "Format Apollo Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Apollo Data": {
+      "main": [
+        [
+          {
+            "node": "AI Personalization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Personalization": {
+      "main": [
+        [
+          {
+            "node": "Extract Personalization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Personalization": {
+      "main": [
+        [
+          {
+            "node": "Create GHL Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

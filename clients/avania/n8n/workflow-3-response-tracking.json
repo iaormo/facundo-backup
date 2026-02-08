@@ -1,0 +1,430 @@
+{
+  "name": "Avania - Response Tracking",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reachinbox-webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Reachinbox Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "reachinbox-webhook"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems"
+      },
+      "id": "code-parse-webhook",
+      "name": "Parse Webhook Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300],
+      "typeOptions": {
+        "editor": "jsEditor"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json.event_type }}",
+              "rightValue": "email_opened",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-event-type",
+      "name": "Route by Event Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "range": "A:AG",
+        "options": {}
+      },
+      "id": "find-lead",
+      "name": "Find Lead by Email",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [850, 100],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Response Status": "Replied",
+            "Response Date": "={{ $now }}",
+            "Status": "Responded",
+            "Last Updated": "={{ $now }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "update-replied",
+      "name": "Update: Replied",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1050, 200],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email 1 Status": "Opened",
+            "Last Updated": "={{ $now }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "update-opened",
+      "name": "Update: Opened",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1050, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Response Status": "Unsubscribed",
+            "Status": "Unsubscribed",
+            "Last Updated": "={{ $now }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "update-unsubscribed",
+      "name": "Update: Unsubscribed",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1050, 400],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email 1 Status": "Bounced",
+            "Status": "Bounced",
+            "Last Updated": "={{ $now }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "update-bounced",
+      "name": "Update: Bounced",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1050, 500],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL_ID }}",
+        "text": "=:tada: New Lead Response!",
+        "blocks": [
+          {
+            "type": "header",
+            "text": {
+              "type": "plain_text",
+              "text": "New Email Response",
+              "emoji": true
+            }
+          },
+          {
+            "type": "section",
+            "fields": [
+              {
+                "type": "mrkdwn",
+                "text": "*Lead:*\n{{ $json.first_name }} {{ $json.last_name }}"
+              },
+              {
+                "type": "mrkdwn",
+                "text": "*Company:*\n{{ $json.company }}"
+              },
+              {
+                "type": "mrkdwn",
+                "text": "*Title:*\n{{ $json.title }}"
+              },
+              {
+                "type": "mrkdwn",
+                "text": "*Team Member:*\n{{ $json.team_member }}"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "text": {
+              "type": "mrkdwn",
+              "text": "*Response Preview:*\n{{ $json.response_preview }}"
+            }
+          },
+          {
+            "type": "actions",
+            "elements": [
+              {
+                "type": "button",
+                "text": {
+                  "type": "plain_text",
+                  "text": "View in Sheets",
+                  "emoji": true
+                },
+                "url": "={{ 'https://docs.google.com/spreadsheets/d/' + $env.GOOGLE_SHEETS_ID + '/edit' }}",
+                "action_id": "view-sheets"
+              }
+            ]
+          }
+        ],
+        "options": {}
+      },
+      "id": "slack-notify",
+      "name": "Slack Notification",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1250, 200],
+      "credentials": {
+        "slackApi": "slack-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"status\": \"success\", \"message\": \"Webhook received\"}",
+        "options": {}
+      },
+      "id": "respond-to-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json.event_type }}",
+              "rightValue": "email_replied",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-replied",
+      "name": "Is Reply?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse webhook data from Reachinbox\nconst input = items[0].json.body;\n\n// Extract relevant fields\nconst parsed = {\n  event_type: input.event || input.event_type,\n  email: input.to || input.recipient_email,\n  from: input.from || input.sender_email,\n  subject: input.subject,\n  message_id: input.message_id,\n  timestamp: input.timestamp || new Date().toISOString(),\n  response_body: input.body || input.message_body || input.content,\n  campaign_id: input.campaign_id,\n  first_name: input.first_name || input.contact?.first_name,\n  last_name: input.last_name || input.contact?.last_name,\n  company: input.company || input.contact?.company,\n  title: input.title || input.contact?.title,\n  team_member: input.team_member || input.custom_fields?.team_member\n};\n\n// Create preview of response\nif (parsed.response_body) {\n  parsed.response_preview = parsed.response_body.substring(0, 200) + (parsed.response_body.length > 200 ? '...' : '');\n}\n\nreturn [{json: parsed}];"
+      },
+      "id": "parse-webhook-code",
+      "name": "Parse Webhook Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 500]
+    }
+  ],
+  "connections": {
+    "Reachinbox Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Webhook Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Webhook Data": {
+      "main": [
+        [
+          {
+            "node": "Route by Event Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Event Type": {
+      "main": [
+        [
+          {
+            "node": "Is Reply?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update: Opened",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update: Unsubscribed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update: Bounced",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Reply?": {
+      "main": [
+        [
+          {
+            "node": "Find Lead by Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Lead by Email": {
+      "main": [
+        [
+          {
+            "node": "Update: Replied",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update: Replied": {
+      "main": [
+        [
+          {
+            "node": "Slack Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack Notification": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update: Opened": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update: Unsubscribed": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update: Bounced": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "pinData": {}
+}

@@ -1,0 +1,507 @@
+{
+  "name": "Avania - Email Sending",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "range": "A:AG",
+        "options": {}
+      },
+      "id": "google-sheets-read",
+      "name": "Read Ready Leads",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [450, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json.Status }}",
+              "rightValue": "Ready",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "condition-2",
+              "leftValue": "={{ $json['Email 1 Status'] }}",
+              "rightValue": "Pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-ready",
+      "name": "Filter Ready to Send",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "limit": 30
+      },
+      "id": "limit-sends",
+      "name": "Limit Daily Sends",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      },
+      "id": "switch-team-member",
+      "name": "Switch by Team Member",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.reachinbox.ai/api/v1/campaigns/emails/send",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "to",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "from",
+              "value": "angela.johnson@avaniaclinical.com"
+            },
+            {
+              "name": "from_name",
+              "value": "Angela Johnson"
+            },
+            {
+              "name": "subject",
+              "value": "QMSR is live—your first 90 days matter"
+            },
+            {
+              "name": "body",
+              "value": "={{ $json['Personalized Opening Line'] + '\n\n' + $json['Angela Email Body'] }}"
+            },
+            {
+              "name": "track_opens",
+              "value": "true"
+            },
+            {
+              "name": "track_clicks",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-angela",
+      "name": "Send Angela Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 100],
+      "credentials": {
+        "httpHeaderAuth": "reachinbox-api-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.reachinbox.ai/api/v1/campaigns/emails/send",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "to",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "from",
+              "value": "sam.engelman@avaniaclinical.com"
+            },
+            {
+              "name": "from_name",
+              "value": "Sam Engelman"
+            },
+            {
+              "name": "subject",
+              "value": "Your AI device needs a PCCP—here's why"
+            },
+            {
+              "name": "body",
+              "value": "={{ $json['Personalized Opening Line'] + '\n\n' + $json['Sam Email Body'] }}"
+            },
+            {
+              "name": "track_opens",
+              "value": "true"
+            },
+            {
+              "name": "track_clicks",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-sam",
+      "name": "Send Sam Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 200],
+      "credentials": {
+        "httpHeaderAuth": "reachinbox-api-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.reachinbox.ai/api/v1/campaigns/emails/send",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "to",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "from",
+              "value": "catriona.boyd@avaniaclinical.com"
+            },
+            {
+              "name": "from_name",
+              "value": "Catriona Boyd"
+            },
+            {
+              "name": "subject",
+              "value": "QMSR is live: your QMS gaps just became compliance risks"
+            },
+            {
+              "name": "body",
+              "value": "={{ $json['Personalized Opening Line'] + '\n\n' + $json['Catriona Email Body'] }}"
+            },
+            {
+              "name": "track_opens",
+              "value": "true"
+            },
+            {
+              "name": "track_clicks",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-catriona",
+      "name": "Send Catriona Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 300],
+      "credentials": {
+        "httpHeaderAuth": "reachinbox-api-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.reachinbox.ai/api/v1/campaigns/emails/send",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "to",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "from",
+              "value": "jasmine.saba@avaniaclinical.com"
+            },
+            {
+              "name": "from_name",
+              "value": "Jasmine Saba"
+            },
+            {
+              "name": "subject",
+              "value": "Strategic CRO partnership vs. transactional project work"
+            },
+            {
+              "name": "body",
+              "value": "={{ $json['Personalized Opening Line'] + '\n\n' + $json['Jasmine Email Body'] }}"
+            },
+            {
+              "name": "track_opens",
+              "value": "true"
+            },
+            {
+              "name": "track_clicks",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-jasmine",
+      "name": "Send Jasmine Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 400],
+      "credentials": {
+        "httpHeaderAuth": "reachinbox-api-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.reachinbox.ai/api/v1/campaigns/emails/send",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "to",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "from",
+              "value": "jeannine.umpleby@avaniaclinical.com"
+            },
+            {
+              "name": "from_name",
+              "value": "Jeannine Umpleby"
+            },
+            {
+              "name": "subject",
+              "value": "The medtech CRO built for companies like yours"
+            },
+            {
+              "name": "body",
+              "value": "={{ $json['Personalized Opening Line'] + '\n\n' + $json['Jeannine Email Body'] }}"
+            },
+            {
+              "name": "track_opens",
+              "value": "true"
+            },
+            {
+              "name": "track_clicks",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-jeannine",
+      "name": "Send Jeannine Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 500],
+      "credentials": {
+        "httpHeaderAuth": "reachinbox-api-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email 1 Status": "Sent",
+            "Email 1 Date": "={{ $now }}",
+            "Status": "Sending",
+            "Last Updated": "={{ $now }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "update-sent",
+      "name": "Mark as Sent",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1450, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Ready Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Ready Leads": {
+      "main": [
+        [
+          {
+            "node": "Filter Ready to Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Ready to Send": {
+      "main": [
+        [
+          {
+            "node": "Limit Daily Sends",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit Daily Sends": {
+      "main": [
+        [
+          {
+            "node": "Switch by Team Member",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch by Team Member": {
+      "main": [
+        [
+          {
+            "node": "Send Angela Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Sam Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Catriona Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Jasmine Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Jeannine Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Angela Email": {
+      "main": [
+        [
+          {
+            "node": "Mark as Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Sam Email": {
+      "main": [
+        [
+          {
+            "node": "Mark as Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Catriona Email": {
+      "main": [
+        [
+          {
+            "node": "Mark as Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Jasmine Email": {
+      "main": [
+        [
+          {
+            "node": "Mark as Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Jeannine Email": {
+      "main": [
+        [
+          {
+            "node": "Mark as Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "pinData": {}
+}

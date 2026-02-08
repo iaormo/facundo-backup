@@ -1,0 +1,175 @@
+{
+  "name": "Avania - Response Tracking (Poll)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 30
+            }
+          ]
+        }
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://rest.gohighlevel.com/v1/contacts/",
+        "method": "GET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "100"
+            },
+            {
+              "name": "status",
+              "value": "Sent"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Get Sent Contacts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "Authorization",
+          "value": "Bearer {{ $env.GHL_API_KEY }}"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.reachinbox.io/api/v1/emails/replies",
+        "method": "GET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apiKey",
+              "value": "d5ab693c-0688-4102-8e43-769ea5c57ec3"
+            },
+            {
+              "name": "since",
+              "value": "={{ $now.minus({ hours: 1 }).toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Poll Reachinbox Replies",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Match replies to GHL contacts\nconst replies = $json.replies || [];\nconst contacts = $json.contacts || [];\n\nconst matched = replies.map(reply => {\n  const contact = contacts.find(c => c.email === reply.from);\n  if (!contact) return null;\n  \n  // Categorize response\n  const body = (reply.body || '').toLowerCase();\n  let category = 'Other';\n  if (body.includes('interested') || body.includes('yes') || body.includes('schedule')) {\n    category = 'Interested';\n  } else if (body.includes('not now') || body.includes('not interested')) {\n    category = 'Not Now';\n  } else if (body.includes('wrong person')) {\n    category = 'Wrong Person';\n  } else if (body.includes('unsubscribe')) {\n    category = 'Unsubscribe';\n  }\n  \n  return {\n    json: {\n      contactId: contact.id,\n      email: reply.from,\n      subject: reply.subject,\n      body: reply.body.substring(0, 500),\n      category: category,\n      receivedAt: reply.timestamp\n    }\n  };\n}).filter(item => item !== null);\n\nreturn matched;"
+      },
+      "name": "Match & Categorize",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://rest.gohighlevel.com/v1/contacts/{{ $json.contactId }}",
+        "method": "PUT",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"customField\": {\"RbxKguAHbRjqH5K5922f\": {\"status\": \"Responded\", \"response_date\": \"{{ $now.format('YYYY-MM-DD HH:mm:ss') }}\", \"response_category\": \"{{ $json.category }}\", \"response_preview\": \"{{ $json.body }}\"}}}",
+        "options": {}
+      },
+      "name": "Update GHL Response",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1050, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "Authorization",
+          "value": "Bearer {{ $env.GHL_API_KEY }}"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL_ID }}",
+        "text": "=:rotating_light: *New Response - Avania* :rotating_light:\n\n*Contact:* {{ $json.email }}\n*Category:* {{ $json.category }}\n*Preview:* {{ $json.body }}\n\nCheck GHL for full details.",
+        "options": {}
+      },
+      "name": "Slack Alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1250, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Sent Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Sent Contacts": {
+      "main": [
+        [
+          {
+            "node": "Poll Reachinbox Replies",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Poll Reachinbox Replies": {
+      "main": [
+        [
+          {
+            "node": "Match & Categorize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Match & Categorize": {
+      "main": [
+        [
+          {
+            "node": "Update GHL Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update GHL Response": {
+      "main": [
+        [
+          {
+            "node": "Slack Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "name": "Avania - Email Sending & Tracking",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://rest.gohighlevel.com/v1/contacts/",
+        "method": "GET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "100"
+            },
+            {
+              "name": "status",
+              "value": "Ready"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Get GHL Contacts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "Authorization",
+          "value": "Bearer {{ $env.GHL_API_KEY }}"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build email content based on team member\nconst teamMember = $json.customField?.team_member || 'Catriona';\nconst firstName = $json.firstName || '';\nconst company = $json.companyName || '';\nconst openingLine = $json.customField?.personalized_opening || '';\n\nconst templates = {\n  'Catriona': {\n    subject: 'QMSR is live: your QMS gaps just became compliance risks',\n    body: `${openingLine}\\n\\nSunday, February 2, FDA's Quality Management System Regulation officially replaced the Quality System Regulation. If your quality team is asking \"what needs to change right now,\" you're not alone.\\n\\nThe companies that prepared for QMSR in 2025 have compliant systems today. The ones waiting are now facing urgent remediation with FDA inspections looming.\\n\\nWorth a 30-minute call this week to assess your current QMSR compliance status?\\n\\nBest regards,\\nCatriona Boyd\\nDirector, Quality Services\\nAvania Clinical`\n  },\n  'Angela': {\n    subject: 'QMSR is live—your first 90 days matter',\n    body: `${openingLine}\\n\\nThree days ago, FDA's Quality Management System Regulation officially replaced the Quality System Regulation. After 25 years navigating FDA regulatory transitions, I can tell you: the companies that get this right in the first 90 days avoid the scramble that hits everyone else.\\n\\nWorth a 30-minute strategy call this week?\\n\\nBest regards,\\nAngela Johnson\\nGlobal MedTech Executive, Regulatory Affairs\\nAvania Clinical`\n  },\n  'Sam': {\n    subject: 'Your AI device needs a PCCP—here's why',\n    body: `${openingLine}\\n\\nIf your medical device uses machine learning, you've probably heard about PCCP. What you might not realize: PCCP is quickly becoming FDA's litmus test for whether you understand AI device regulation.\\n\\nWorth a 30-minute conversation to assess your PCCP readiness?\\n\\nBest regards,\\nSam Engelman\\nDirector, Regulatory Affairs\\nAvania Clinical`\n  },\n  'Jasmine': {\n    subject: 'Strategic CRO partnership vs. transactional project work',\n    body: `${openingLine}\\n\\nMost medtech companies approach CRO relationships transactionally. Then they're surprised when the CRO delivers exactly what was asked for—but the broader business outcomes fall short.\\n\\nWorth a 30-minute conversation?\\n\\nBest regards,\\nJasmine Saba\\nSVP, Strategic Relationships\\nAvania Clinical`\n  },\n  'Jeannine': {\n    subject: 'The medtech CRO built for companies like yours',\n    body: `${openingLine}\\n\\nQuick question: when you need regulatory strategy, clinical trial execution, and quality system support, are you working with three different vendors—or one integrated partner?\\n\\nAvania is the world's only medtech-exclusive CRO.\\n\\nWorth a brief conversation?\\n\\nBest regards,\\nJeannine Umpleby\\nDirector, Business Development\\nAvania Clinical`\n  }\n};\n\nconst template = templates[teamMember] || templates['Catriona'];\nconst fromEmail = teamMember.toLowerCase().replace(' ', '.') + '@avaniaclinical.com';\n\nreturn [{\n  json: {\n    ...$json,\n    emailSubject: template.subject,\n    emailBody: template.body,\n    fromEmail: fromEmail,\n    toEmail: $json.email\n  }\n}];"
+      },
+      "name": "Build Email Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.reachinbox.io/api/v1/campaigns/emails/send",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"apiKey\": \"d5ab693c-0688-4102-8e43-769ea5c57ec3\", \"to\": \"{{ $json.toEmail }}\", \"from\": \"{{ $json.fromEmail }}\", \"subject\": \"{{ $json.emailSubject }}\", \"body\": \"{{ $json.emailBody }}\", \"trackOpens\": true, \"trackClicks\": true}",
+        "options": {}
+      },
+      "name": "Send via Reachinbox",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://rest.gohighlevel.com/v1/contacts/{{ $json.id }}",
+        "method": "PUT",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"customField\": {\"RbxKguAHbRjqH5K5922f\": {\"status\": \"Sent\", \"email_1_sent_date\": \"{{ $now.format('YYYY-MM-DD HH:mm:ss') }}\", \"reachinbox_message_id\": \"{{ $json.messageId || 'pending' }}\"}}}",
+        "options": {}
+      },
+      "name": "Update GHL Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1050, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "Authorization",
+          "value": "Bearer {{ $env.GHL_API_KEY }}"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get GHL Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get GHL Contacts": {
+      "main": [
+        [
+          {
+            "node": "Build Email Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Email Content": {
+      "main": [
+        [
+          {
+            "node": "Send via Reachinbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send via Reachinbox": {
+      "main": [
+        [
+          {
+            "node": "Update GHL Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

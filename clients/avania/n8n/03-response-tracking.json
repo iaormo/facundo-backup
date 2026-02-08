@@ -1,0 +1,261 @@
+{
+  "name": "Avania - Response Tracking",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "avania-reachinbox-webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-response",
+      "name": "Reachinbox Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 300],
+      "webhookId": "avania-reachinbox-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Reachinbox webhook payload\nconst payload = $json.body || $json;\n\n// Determine event type\nconst eventType = payload.event || 'unknown';\nconst email = payload.to || payload.email || '';\nconst subject = payload.subject || '';\nconst body = payload.body || payload.message || '';\n\n// Categorize response\nlet responseCategory = 'Other';\nconst bodyLower = body.toLowerCase();\n\nif (bodyLower.includes('interested') || bodyLower.includes('yes') || bodyLower.includes('schedule') || bodyLower.includes('meeting') || bodyLower.includes('call')) {\n  responseCategory = 'Interested';\n} else if (bodyLower.includes('not now') || bodyLower.includes('not interested') || bodyLower.includes('timing') || bodyLower.includes('later')) {\n  responseCategory = 'Not Now';\n} else if (bodyLower.includes('wrong person') || bodyLower.includes('not the right') || bodyLower.includes('contact')) {\n  responseCategory = 'Wrong Person';\n} else if (bodyLower.includes('unsubscribe') || bodyLower.includes('remove') || bodyLower.includes('stop')) {\n  responseCategory = 'Unsubscribe';\n} else if (bodyLower.includes('out of office') || bodyLower.includes('ooo') || bodyLower.includes('vacation')) {\n  responseCategory = 'OOO';\n}\n\nreturn [{\n  json: {\n    eventType,\n    fromEmail: payload.from || '',\n    toEmail: email,\n    subject: subject,\n    body: body.substring(0, 500), // Truncate for preview\n    responseCategory,\n    receivedAt: payload.timestamp || new Date().toISOString(),\n    threadId: payload.threadId || '',\n    messageId: payload.messageId || ''\n  }\n}];"
+      },
+      "id": "parse-webhook",
+      "name": "Parse Webhook Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "range": "A:AG",
+        "options": {}
+      },
+      "id": "find-lead",
+      "name": "Find Lead by Email",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [650, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json.Email }}",
+              "rightValue": "={{ $('Parse Webhook Data').item.json.toEmail }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "match-lead",
+      "name": "Match Lead",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Response Status": "Replied",
+            "Response Date": "={{ $now.format('YYYY-MM-DD HH:mm:ss') }}",
+            "Response Category": "={{ $('Parse Webhook Data').item.json.responseCategory }}",
+            "Status": "Responded",
+            "Last Updated": "={{ $now.format('YYYY-MM-DD HH:mm:ss') }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "update-response",
+      "name": "Update Response Status",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1050, 200],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"status\": \"success\", \"message\": \"Response tracked\"}",
+        "options": {}
+      },
+      "id": "webhook-response-node",
+      "name": "Response to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1250, 400]
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL_ID }}",
+        "text": "=:rotating_light: *New Response - Avania Outbound* :rotating_light:\n\n*Team Member:* {{ $json['Team Member'] }}\n*Lead:* {{ $json['First Name'] }} {{ $json['Last Name'] }} ({{ $json.Company }})\n*Title:* {{ $json.Title }}\n*Response Category:* {{ $('Parse Webhook Data').item.json.responseCategory }}\n*Campaign:* {{ $json.Campaign }}\n\n*Preview:*\n```\n{{ $('Parse Webhook Data').item.json.body }}\n```\n\n<{{ $env.GOOGLE_SHEETS_URL }}|View in Sheets>",
+        "options": {}
+      },
+      "id": "slack-notify",
+      "name": "Slack Notification",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1250, 200],
+      "credentials": {
+        "slackApi": "slack-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $('Parse Webhook Data').item.json.responseCategory }}",
+              "rightValue": "Interested",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "check-interested",
+      "name": "Is Interested?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1450, 200]
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL_ID }}",
+        "text": "=:fire: *HOT LEAD - Meeting Requested* :fire:\n\n*Team Member:* {{ $json['Team Member'] }}\n*Lead:* {{ $json['First Name'] }} {{ $json['Last Name'] }}\n*Company:* {{ $json.Company }}\n*Email:* {{ $json.Email }}\n*Title:* {{ $json.Title }}\n\n*Action Required:* Follow up within 24 hours!\n\n<{{ $env.GOOGLE_SHEETS_URL }}|View in Sheets>",
+        "options": {}
+      },
+      "id": "slack-hot-lead",
+      "name": "Hot Lead Alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1650, 100],
+      "credentials": {
+        "slackApi": "slack-credentials"
+      }
+    }
+  ],
+  "connections": {
+    "Reachinbox Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Webhook Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Webhook Data": {
+      "main": [
+        [
+          {
+            "node": "Find Lead by Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Lead by Email": {
+      "main": [
+        [
+          {
+            "node": "Match Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Match Lead": {
+      "main": [
+        [
+          {
+            "node": "Update Response Status",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Response to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Response Status": {
+      "main": [
+        [
+          {
+            "node": "Slack Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack Notification": {
+      "main": [
+        [
+          {
+            "node": "Is Interested?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Interested?": {
+      "main": [
+        [
+          {
+            "node": "Hot Lead Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": []
+}

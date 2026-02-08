@@ -1,0 +1,127 @@
+{
+  "name": "Avania - Email Sending (Avania Workspace)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://rest.gohighlevel.com/v1/contacts/",
+        "method": "GET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "25"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Get GHL Contacts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const contacts = $json.contacts || [];\nconst readyContacts = contacts.filter(c => c.customField?.RbxKguAHbRjqH5K5922f?.status === 'Ready');\n\nreturn readyContacts.map(contact => {\n  const cf = contact.customField?.RbxKguAHbRjqH5K5922f || {};\n  const teamMember = cf.team_member || 'Catriona';\n  const openingLine = cf.personalized_opening || '';\n  const campaign = cf.campaign || 'QMSR';\n  \n  // Email templates by team member/campaign\n  const templates = {\n    'Catriona': {\n      subject: 'QMSR is live: your QMS gaps just became compliance risks',\n      signature: 'Catriona Boyd\\nDirector, Quality Services\\nAvania Clinical'\n    },\n    'Angela': {\n      subject: 'QMSR is live—your first 90 days matter',\n      signature: 'Angela Johnson\\nGlobal MedTech Executive, Regulatory Affairs\\nAvania Clinical'\n    },\n    'Sam': {\n      subject: 'Your AI device needs a PCCP—here is why',\n      signature: 'Sam Engelman\\nDirector, Regulatory Affairs\\nAvania Clinical'\n    },\n    'Jasmine': {\n      subject: 'Strategic CRO partnership vs. transactional project work',\n      signature: 'Jasmine Saba\\nSVP, Strategic Relationships\\nAvania Clinical'\n    },\n    'Jeannine': {\n      subject: 'The medtech CRO built for companies like yours',\n      signature: 'Jeannine Umpleby\\nDirector, Business Development\\nAvania Clinical'\n    }\n  };\n  \n  const template = templates[teamMember] || templates['Catriona'];\n  \n  // Build email body with personalized opening\n  let body = '';\n  \n  if (teamMember === 'Catriona') {\n    body = `${openingLine}\\n\\nSunday, February 2, FDA's Quality Management System Regulation officially replaced the Quality System Regulation. The companies that prepared have compliant systems today. The ones waiting are now facing urgent remediation with FDA inspections looming.\\n\\nWorth a 30-minute call this week to assess your current QMSR compliance status?\\n\\nBest regards,\\n${template.signature}`;\n  } else if (teamMember === 'Angela') {\n    body = `${openingLine}\\n\\nThree days ago, FDA's Quality Management System Regulation officially replaced the Quality System Regulation. After 25 years navigating FDA regulatory transitions, I can tell you: the companies that get this right in the first 90 days avoid the scramble.\\n\\nWorth a 30-minute strategy call this week?\\n\\nBest regards,\\n${template.signature}`;\n  } else if (teamMember === 'Sam') {\n    body = `${openingLine}\\n\\nIf your medical device uses machine learning, you have probably heard about PCCP. What you might not realize: PCCP is quickly becoming FDA's litmus test for whether you understand AI device regulation.\\n\\nWorth a 30-minute conversation to assess your PCCP readiness?\\n\\nBest regards,\\n${template.signature}`;\n  } else if (teamMember === 'Jasmine') {\n    body = `${openingLine}\\n\\nMost medtech companies approach CRO relationships transactionally. Then they are surprised when the CRO delivers exactly what was asked for—but the broader business outcomes fall short.\\n\\nWorth a 30-minute conversation?\\n\\nBest regards,\\n${template.signature}`;\n  } else if (teamMember === 'Jeannine') {\n    body = `${openingLine}\\n\\nQuick question: when you need regulatory strategy, clinical trial execution, and quality system support, are you working with three different vendors—or one integrated partner?\\n\\nAvania is the world's only medtech-exclusive CRO.\\n\\nWorth a brief conversation?\\n\\nBest regards,\\n${template.signature}`;\n  }\n  \n  // Use Avania workspace email - not individual team member emails\n  return {\n    json: {\n      contactId: contact.id,\n      email: contact.email,\n      firstName: contact.firstName,\n      teamMember: teamMember,\n      emailSubject: template.subject,\n      emailBody: body,\n      fromEmail: 'team@avaniaclinical.com'  // Avania workspace email\n    }\n  };\n});"
+      },
+      "name": "Build Emails (Avania Workspace)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.reachinbox.io/api/v1/campaigns/emails/send",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"apiKey\": \"d5ab693c-0688-4102-8e43-769ea5c57ec3\", \"to\": \"{{ $json.email }}\", \"from\": \"{{ $json.fromEmail }}\", \"subject\": \"{{ $json.emailSubject }}\", \"body\": \"{{ $json.emailBody }}\", \"trackOpens\": true, \"trackClicks\": true}",
+        "options": {}
+      },
+      "name": "Send via Reachinbox",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://rest.gohighlevel.com/v1/contacts/{{ $json.contactId }}",
+        "method": "PUT",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"customField\": {\"RbxKguAHbRjqH5K5922f\": {\"status\": \"Sent\", \"email_1_sent_date\": \"{{ $now.format('YYYY-MM-DD HH:mm:ss') }}\", \"sent_from\": \"team@avaniaclinical.com\"}}}",
+        "options": {}
+      },
+      "name": "Update GHL Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1050, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get GHL Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get GHL Contacts": {
+      "main": [
+        [
+          {
+            "node": "Build Emails (Avania Workspace)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Emails (Avania Workspace)": {
+      "main": [
+        [
+          {
+            "node": "Send via Reachinbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send via Reachinbox": {
+      "main": [
+        [
+          {
+            "node": "Update GHL Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

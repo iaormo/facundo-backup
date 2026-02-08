@@ -1,0 +1,251 @@
+{
+  "name": "Avania - Lead Import & Enrichment",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "range": "A:AG",
+        "options": {}
+      },
+      "id": "google-sheets-read",
+      "name": "Read New Leads",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [450, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json['Enrichment Status'] }}",
+              "rightValue": "Pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-pending",
+      "name": "Filter Pending",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {},
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert B2B sales personalization assistant for Avania Clinical, a medical device CRO company. Generate personalized opening lines for cold emails that are 1-2 sentences, reference specific details about the company/person, and naturally lead into regulatory/clinical services."
+          },
+          {
+            "role": "user",
+            "content": "=Given this lead data:\n\nCompany: {{ $json.Company }}\nIndustry: {{ $json.Industry }}\nPerson: {{ $json['First Name'] }} {{ $json['Last Name'] }}\nTitle: {{ $json.Title }}\nTeam Member: {{ $json['Team Member'] }}\nCampaign: {{ $json.Campaign }}\nCompany Website: {{ $json['Company Website'] }}\n\nGenerate 3 personalized opening lines for a cold email. Each should be 1-2 sentences max, sound natural/conversational, and reference relevant details.\n\nOutput format:\nHook_Type: [Funding/FDA/Therapeutic/LinkedIn/Challenge/General]\nOption_1: [opening line]\nOption_2: [opening line]\nOption_3: [opening line]\nRecommended: [1/2/3]"
+          }
+        ]
+      },
+      "id": "openai-personalize",
+      "name": "AI Personalization",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.8,
+      "position": [1050, 300],
+      "credentials": {
+        "openAiApi": "openai-api-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse AI output to extract fields\nconst aiResponse = $json.message.content;\n\nconst lines = aiResponse.split('\\n');\nlet hookType = 'General';\nlet option1 = '';\nlet option2 = '';\nlet option3 = '';\nlet recommended = '1';\n\nlines.forEach(line => {\n  if (line.includes('Hook_Type:')) hookType = line.split(':')[1].trim();\n  if (line.includes('Option_1:')) option1 = line.split(':')[1].trim();\n  if (line.includes('Option_2:')) option2 = line.split(':')[1].trim();\n  if (line.includes('Option_3:')) option3 = line.split(':')[1].trim();\n  if (line.includes('Recommended:')) recommended = line.split(':')[1].trim();\n});\n\nconst selectedOpening = recommended === '1' ? option1 : recommended === '2' ? option2 : option3;\n\nreturn [{\n  json: {\n    ...$json,\n    'Hook Type': hookType,\n    'Opening Option 1': option1,\n    'Opening Option 2': option2,\n    'Opening Option 3': option3,\n    'Selected Opening': selectedOpening\n  }\n}];"
+      },
+      "id": "code-parse-ai",
+      "name": "Parse AI Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Enrichment Status": "Complete",
+            "Personalization Hook": "={{ $json['Hook Type'] }}",
+            "Personalized Opening Line": "={{ $json['Selected Opening'] }}",
+            "Status": "Ready",
+            "Last Updated": "={{ $now.format('YYYY-MM-DD HH:mm:ss') }}"
+          }
+        },
+        "options": {
+          "valueRenderMode": "UNFORMATTED_VALUE"
+        }
+      },
+      "id": "update-sheets",
+      "name": "Update Lead Database",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1450, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.apollo.io/api/v1/mixed_people/api_search",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"api_key\": \"{{ $env.APOLLO_API_KEY }}\", \"person_titles\": [\"VP Regulatory Affairs\", \"Director Regulatory Affairs\", \"VP Quality Assurance\"], \"organization_locations\": [\"United States\"], \"person_locations\": [\"United States\"], \"organization_num_employees_ranges\": [\"11-50\", \"51-200\", \"201-500\"], \"contact_email_status\": [\"verified\"], \"page\": 1, \"per_page\": 100}",
+        "options": {}
+      },
+      "id": "apollo-search",
+      "name": "Apollo Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 500]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Lead ID": "={{ 'AUTO-' + (1000 + $runIndex) }}",
+            "Team Member": "Angela",
+            "Campaign": "Strategic",
+            "Status": "Pending",
+            "First Name": "={{ $json.first_name }}",
+            "Last Name": "={{ $json.last_name }}",
+            "Email": "={{ $json.email }}",
+            "Company": "={{ $json.organization.name }}",
+            "Title": "={{ $json.title }}",
+            "Industry": "Medical Devices",
+            "Company Size": "={{ $json.organization.estimated_num_employees }}",
+            "Location": "={{ $json.city }}, {{ $json.state }}",
+            "Company Website": "={{ $json.organization.website_url }}",
+            "LinkedIn URL": "={{ $json.linkedin_url }}",
+            "Enrichment Status": "Pending",
+            "Created Date": "={{ $now.format('YYYY-MM-DD') }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "add-to-sheets",
+      "name": "Add to Lead Database",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [650, 500],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read New Leads",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Apollo Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read New Leads": {
+      "main": [
+        [
+          {
+            "node": "Filter Pending",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Pending": {
+      "main": [
+        [
+          {
+            "node": "AI Personalization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Personalization": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Output": {
+      "main": [
+        [
+          {
+            "node": "Update Lead Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo Search": {
+      "main": [
+        [
+          {
+            "node": "Add to Lead Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "pinData": {}
+}

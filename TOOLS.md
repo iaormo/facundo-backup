@@ -44,6 +44,7 @@
 - #reminders (1469397446227529801): Centralized reminder channel
 - #learning (1469429009971413023): Educational content and resources
 - #scaleplus (1469295024469446810): All ScalePlus.io related tasks
+- #client-new (1469856641733230673): New client channel
 - #lead-generation (1469566862403702930): Lead generation tasks and campaigns
 - #sales-and-marketing (1469566918737395818): Sales and marketing tasks
 - #development (1469566955093757993): All development work
@@ -60,4 +61,56 @@
 - Checks: phishing, suspicious logins, Discord anomalies, cloud alerts
 - Alerts posted to #security channel if threats detected
 
+**Sentinel Daily Drill:** Job ID 804a1338-6c29-44a6-9fd7-baad168cb793
+- Runs daily at 09:00 Asia Manila time (01:00 UTC)
+- Defensive security drills in STAGING only
+- Read only monitoring of security logs and alerts
+- Output posted to #security-ops channel
+- **Includes prompt injection defense testing**
+
+### Sentinel Drill Scenarios
+
+**Standard Security Drills:**
+- login spam fake creds
+- rate limit burst within safe cap
+- invalid JSON or oversized input
+- unauth access to protected route expecting 401 or 403
+- expired token reuse expecting reject
+- repeated identical requests bot pattern
+- benign blocked file extension upload
+- untrusted origin request expecting block
+
+**Prompt Injection Defense Drills:**
+- instruction override attempts ("ignore previous")
+- role-play attacks ("pretend you are...")
+- delimiter confusion and escaping
+- system prompt extraction probes
+- indirect injection via external content
+- nested injection via quoted content
+- authoritative fake system messages
+
+**Response validation:** Confirm injection attempts are rejected without acknowledgment
+
 **On-Demand Analysis:** Forward any suspicious emails, links, or indicators to me for immediate analysis
+
+### Sentinel Weekly Hygiene Check
+**Job ID:** 523aa03b-2fee-493f-94f3-fbef879a21c0
+**Schedule:** Weekly, Mondays at 09:00 Asia Manila time
+**Output:** #security-ops channel
+
+**Automated checks I can perform:**
+- Discord bot token age audit (flag any >90 days old)
+- Server permission drift detection (compare to baseline)
+- New/unrecognized bot joins in monitored servers
+- Recent security alerts summary (last 7 days)
+
+**Manual reminders included:**
+- Verify challenge phrase with Heidi (voice cloning defense)
+- Check haveibeenpwned.com for new breaches
+- Confirm MFA status on critical accounts
+- Review and prune unused n8n/Make connections
+
+**Threat landscape briefing:**
+- Summary of new attack patterns relevant to your profile
+- Emerging threats in AI automation space
+- Discord-specific security advisories

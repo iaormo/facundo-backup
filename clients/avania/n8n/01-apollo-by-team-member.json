@@ -1,0 +1,263 @@
+{
+  "name": "Avania - Apollo Lead Import by Team Member",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.apollo.io/api/v1/mixed_people/api_search",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"api_key\": \"B0qwKmMAtpBBHBCd5AIfA\", \"person_titles\": [\"VP Regulatory Affairs\", \"SVP Regulatory Affairs\", \"Chief Regulatory Officer\", \"VP Quality Assurance\", \"Director Regulatory Affairs\", \"VP Quality\"], \"organization_locations\": [\"United States\", \"Canada\"], \"organization_num_employees_ranges\": [\"51-200\", \"201-500\", \"501-1000\"], \"organization_keywords\": [\"medtech\", \"medical device\", \"cardiovascular\", \"neurology\", \"AI device\", \"digital health\", \"breakthrough device\"], \"q_revenue_gte\": 10000000, \"contact_email_status\": [\"verified\"], \"page\": 1, \"per_page\": 20}",
+        "options": {}
+      },
+      "name": "Apollo - Angela (Strategic Regulatory)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 100]
+    },
+    {
+      "parameters": {
+        "url": "https://api.apollo.io/api/v1/mixed_people/api_search",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"api_key\": \"B0qwKmMAtpBBHBCd5AIfA\", \"person_titles\": [\"VP Engineering\", \"CTO\", \"Director Regulatory Affairs\", \"VP Product\", \"Head of Data Science\", \"VP R&D\"], \"organization_locations\": [\"United States\", \"Canada\", \"United Kingdom\"], \"organization_num_employees_ranges\": [\"11-50\", \"51-200\", \"201-500\"], \"organization_keywords\": [\"digital health\", \"AI medical device\", \"SaMD\", \"ECG\", \"cardiac monitoring\", \"diagnostic algorithm\", \"wearable\", \"machine learning\"], \"contact_email_status\": [\"verified\"], \"page\": 1, \"per_page\": 20}",
+        "options": {}
+      },
+      "name": "Apollo - Sam (Digital Health/AI)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.apollo.io/api/v1/mixed_people/api_search",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"api_key\": \"B0qwKmMAtpBBHBCd5AIfA\", \"person_titles\": [\"VP Quality Assurance\", \"Director Quality\", \"Quality Manager\", \"VP QA/RA\", \"COO\", \"VP Operations\"], \"organization_locations\": [\"United States\", \"Canada\"], \"organization_num_employees_ranges\": [\"11-50\", \"51-200\", \"201-500\"], \"organization_keywords\": [\"FDA\", \"ISO 13485\", \"quality management\", \"medical device manufacturer\", \"QMS\"], \"contact_email_status\": [\"verified\"], \"page\": 1, \"per_page\": 20}",
+        "options": {}
+      },
+      "name": "Apollo - Catriona (Quality/QMSR)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 500]
+    },
+    {
+      "parameters": {
+        "url": "https://api.apollo.io/api/v1/mixed_people/api_search",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"api_key\": \"B0qwKmMAtpBBHBCd5AIfA\", \"person_titles\": [\"CEO\", \"COO\", \"Chief Strategy Officer\", \"CFO\", \"VP Strategic Planning\", \"VP Business Development\"], \"organization_locations\": [\"United States\", \"Canada\", \"United Kingdom\", \"Germany\"], \"organization_num_employees_ranges\": [\"51-200\", \"201-500\", \"501-1000\", \"1001-5000\"], \"organization_keywords\": [\"medtech\", \"medical device\", \"clinical trials\", \"global expansion\"], \"q_funding_total_gte\": 20000000, \"contact_email_status\": [\"verified\"], \"page\": 1, \"per_page\": 15}",
+        "options": {}
+      },
+      "name": "Apollo - Jasmine (Strategic Partnerships)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 700]
+    },
+    {
+      "parameters": {
+        "url": "https://api.apollo.io/api/v1/mixed_people/api_search",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"api_key\": \"B0qwKmMAtpBBHBCd5AIfA\", \"person_titles\": [\"VP Regulatory Affairs\", \"VP Clinical Operations\", \"Director RA\", \"Director QA\", \"COO\", \"Head of Clinical\"], \"organization_locations\": [\"United States\", \"Canada\", \"United Kingdom\"], \"organization_num_employees_ranges\": [\"11-50\", \"51-200\", \"201-500\"], \"organization_keywords\": [\"clinical trial\", \"regulatory consulting\", \"510(k)\", \"PMA\", \"CRO\"], \"contact_email_status\": [\"verified\"], \"page\": 1, \"per_page\": 20}",
+        "options": {}
+      },
+      "name": "Apollo - Jeannine (Business Development)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 900]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combine all Apollo results and tag by team member\nconst angelaPeople = $('Apollo - Angela (Strategic Regulatory)').item.json.people || [];\nconst samPeople = $('Apollo - Sam (Digital Health/AI)').item.json.people || [];\nconst catrionaPeople = $('Apollo - Catriona (Quality/QMSR)').item.json.people || [];\nconst jasminePeople = $('Apollo - Jasmine (Strategic Partnerships)').item.json.people || [];\nconst jeanninePeople = $('Apollo - Jeannine (Business Development)').item.json.people || [];\n\nconst allLeads = [];\n\nangelaPeople.forEach((person, i) => {\n  allLeads.push({ json: { ...person, teamMember: 'Angela', campaign: 'Strategic Regulatory', leadId: 'AV-A-' + Date.now() + '-' + i }});\n});\n\nsamPeople.forEach((person, i) => {\n  allLeads.push({ json: { ...person, teamMember: 'Sam', campaign: 'AI/ML Devices', leadId: 'AV-S-' + Date.now() + '-' + i }});\n});\n\ncatrionaPeople.forEach((person, i) => {\n  allLeads.push({ json: { ...person, teamMember: 'Catriona', campaign: 'QMSR Compliance', leadId: 'AV-C-' + Date.now() + '-' + i }});\n});\n\njasminePeople.forEach((person, i) => {\n  allLeads.push({ json: { ...person, teamMember: 'Jasmine', campaign: 'Strategic Partnerships', leadId: 'AV-J-' + Date.now() + '-' + i }});\n});\n\njeanninePeople.forEach((person, i) => {\n  allLeads.push({ json: { ...person, teamMember: 'Jeannine', campaign: 'Full-Service CRO', leadId: 'AV-BD-' + Date.now() + '-' + i }});\n});\n\n// Remove duplicates by email\nconst seen = new Set();\nconst unique = allLeads.filter(item => {\n  const email = item.json.email;\n  if (seen.has(email)) return false;\n  seen.add(email);\n  return true;\n});\n\nreturn unique;"
+      },
+      "name": "Combine & Tag Leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 500]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {},
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert B2B sales personalization assistant for Avania Clinical, a medical device CRO company. Generate a personalized opening line for cold emails based on the team member and campaign."
+          },
+          {
+            "role": "user",
+            "content": "=Given:\nCompany: {{ $json.organization?.name }}\nPerson: {{ $json.first_name }} {{ $json.last_name }}\nTitle: {{ $json.title }}\nTeam Member: {{ $json.teamMember }}\nCampaign: {{ $json.campaign }}\n\nGenerate ONE personalized opening line (1-2 sentences) that:\n- References their company or role\n- Naturally leads into the campaign topic\n- Sounds conversational, not salesy\n\nExample for Catriona/QMSR: \"I noticed {{ $json.organization?.name }} is expanding its device portfolio—most quality leaders I talk to are scrambling to understand what QMSR changes mean for their QMS.\"\n\nExample for Sam/AI: \"{{ $json.first_name }}, your work on AI-powered diagnostics at {{ $json.organization?.name }} caught my attention—are you navigating the new FDA expectations for Predetermined Change Control Procedures?\""
+          }
+        ]
+      },
+      "name": "AI Personalization",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.8,
+      "position": [900, 500],
+      "credentials": {
+        "openAiApi": {
+          "apiKey": "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"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const content = $json.message?.content || $json.content || '';\nconst person = $json;\n\nreturn [{\n  json: {\n    email: person.email || '',\n    firstName: person.first_name || '',\n    lastName: person.last_name || '',\n    company: person.organization?.name || '',\n    title: person.title || '',\n    companySize: person.organization?.estimated_num_employees || '',\n    location: (person.city || '') + ', ' + (person.state || ''),\n    website: person.organization?.website_url || '',\n    linkedinUrl: person.linkedin_url || '',\n    industry: 'Medical Devices',\n    teamMember: person.teamMember || 'Catriona',\n    campaign: person.campaign || 'QMSR',\n    status: 'Ready',\n    leadId: person.leadId || ('AV-' + Date.now()),\n    personalizedOpening: content.trim()\n  }\n}];"
+      },
+      "name": "Format for GHL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1100, 500]
+    },
+    {
+      "parameters": {
+        "url": "https://rest.gohighlevel.com/v1/contacts/",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"email\": \"{{ $json.email }}\", \"firstName\": \"{{ $json.firstName }}\", \"lastName\": \"{{ $json.lastName }}\", \"companyName\": \"{{ $json.company }}\", \"jobTitle\": \"{{ $json.title }}\", \"customField\": {\"RbxKguAHbRjqH5K5922f\": {\"linkedin_url\": \"{{ $json.linkedinUrl }}\", \"company_website\": \"{{ $json.website }}\", \"location\": \"{{ $json.location }}\", \"company_size\": \"{{ $json.companySize }}\", \"team_member\": \"{{ $json.teamMember }}\", \"campaign\": \"{{ $json.campaign }}\", \"personalized_opening\": \"{{ $json.personalizedOpening }}\", \"lead_id\": \"{{ $json.leadId }}\", \"status\": \"Ready\", \"source\": \"Apollo\"}}}",
+        "options": {}
+      },
+      "name": "Create GHL Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1300, 500]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Apollo - Angela (Strategic Regulatory)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Apollo - Sam (Digital Health/AI)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Apollo - Catriona (Quality/QMSR)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Apollo - Jasmine (Strategic Partnerships)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Apollo - Jeannine (Business Development)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo - Angela (Strategic Regulatory)": {
+      "main": [
+        [
+          {
+            "node": "Combine & Tag Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo - Sam (Digital Health/AI)": {
+      "main": [
+        [
+          {
+            "node": "Combine & Tag Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo - Catriona (Quality/QMSR)": {
+      "main": [
+        [
+          {
+            "node": "Combine & Tag Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo - Jasmine (Strategic Partnerships)": {
+      "main": [
+        [
+          {
+            "node": "Combine & Tag Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo - Jeannine (Business Development)": {
+      "main": [
+        [
+          {
+            "node": "Combine & Tag Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine & Tag Leads": {
+      "main": [
+        [
+          {
+            "node": "AI Personalization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Personalization": {
+      "main": [
+        [
+          {
+            "node": "Format for GHL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format for GHL": {
+      "main": [
+        [
+          {
+            "node": "Create GHL Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "name": "Avania - Email Sending",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "range": "A:AG",
+        "options": {}
+      },
+      "id": "read-ready-leads",
+      "name": "Read Ready Leads",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [450, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json.Status }}",
+              "rightValue": "Ready",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "condition-2",
+              "leftValue": "={{ $json['Email 1 Status'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-ready",
+      "name": "Filter Ready to Send",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "limit": 25
+      },
+      "id": "limit-batch",
+      "name": "Limit Batch Size",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Select email template based on Team Member and Campaign\nconst teamMember = $json['Team Member'];\nconst campaign = $json.Campaign;\nconst firstName = $json['First Name'];\nconst company = $json.Company;\nconst openingLine = $json['Personalized Opening Line'];\n\nlet subject = '';\nlet body = '';\n\n// Email templates by team member\nconst templates = {\n  'Angela': {\n    subject: 'QMSR is live—your first 90 days matter',\n    body: `${openingLine}\\n\\nThree days ago, FDA's Quality Management System Regulation officially replaced the Quality System Regulation—marking the biggest shift in device quality requirements in 27 years.\\n\\nIf your team is scrambling to understand what needs to change immediately versus what can be phased, you're not alone. After 25 years navigating FDA regulatory transitions, I can tell you: the companies that get this right in the first 90 days avoid the scramble that hits everyone else in 6-12 months.\\n\\nWe've been preparing Avania clients for QMSR since the final rule dropped. The firms that engaged early have systems in place.\\n\\nWorth a 30-minute strategy call this week to assess where your QMS stands?\\n\\nBest regards,\\nAngela Johnson\\nGlobal MedTech Executive, Regulatory Affairs\\nAvania Clinical`\n  },\n  'Catriona': {\n    subject: 'QMSR is live: your QMS gaps just became compliance risks',\n    body: `${openingLine}\\n\\nSunday, February 2, FDA's Quality Management System Regulation officially replaced the Quality System Regulation. If your quality team is asking \"what needs to change right now,\" you're not alone.\\n\\nI've fielded a dozen calls this week from quality leaders trying to prioritize QMSR compliance actions while keeping operations running.\\n\\nThe companies that prepared for QMSR in 2025 have compliant systems today. The ones waiting are now facing urgent remediation with FDA inspections looming.\\n\\nWorth a 30-minute call this week to assess your current QMSR compliance status?\\n\\nBest regards,\\nCatriona Boyd\\nDirector, Quality Services\\nAvania Clinical`\n  },\n  'Sam': {\n    subject: 'Your AI device needs a PCCP—here's why',\n    body: `${openingLine}\\n\\nIf your medical device uses machine learning or adaptive algorithms, you've probably heard about Predetermined Change Control Procedures (PCCP). What you might not realize: PCCP is quickly becoming FDA's litmus test for whether you understand AI device regulation.\\n\\nOver the past 18 months, I've seen a clear pattern: AI device submissions without robust PCCP documentation face extended review cycles. The ones with strong PCCP architecture sail through.\\n\\nWorth a 30-minute conversation to assess your PCCP readiness?\\n\\nBest regards,\\nSam Engelman\\nDirector, Regulatory Affairs\\nAvania Clinical`\n  },\n  'Jasmine': {\n    subject: 'Strategic CRO partnership vs. transactional project work',\n    body: `${openingLine}\\n\\nMost medtech companies approach CRO relationships transactionally: \"We need a 510(k) submission\" or \"We need clinical trial execution.\" Then they're surprised when the CRO delivers exactly what was asked for—but the broader business outcomes fall short.\\n\\nThe companies that win don't just outsource execution. They build strategic partnerships with CRO advisors who understand how regulatory architecture drives commercial outcomes.\\n\\nWorth a 30-minute conversation to explore what a strategic partnership could look like?\\n\\nBest regards,\\nJasmine Saba\\nSVP, Strategic Relationships\\nAvania Clinical`\n  },\n  'Jeannine': {\n    subject: 'The medtech CRO built for companies like yours',\n    body: `${openingLine}\\n\\nQuick question: when you need regulatory strategy, clinical trial execution, and quality system support, are you working with three different vendors—or one integrated partner?\\n\\nI ask because I talk to a lot of medtech companies using the \"multiple vendor\" approach, and they consistently face coordination delays, duplicated efforts, and misaligned strategies.\\n\\nAvania is the world's only medtech-exclusive CRO. We bring regulatory, clinical, and quality services under one roof.\\n\\nWorth a brief conversation?\\n\\nBest regards,\\nJeannine Umpleby\\nDirector, Business Development\\nAvania Clinical`\n  }\n};\n\nconst template = templates[teamMember] || templates['Jeannine'];\n\nreturn [{\n  json: {\n    ...$json,\n    emailSubject: template.subject,\n    emailBody: template.body,\n    fromEmail: teamMember.toLowerCase().replace(' ', '.') + '@avaniaclinical.com'\n  }\n}];"
+      },
+      "id": "build-email",
+      "name": "Build Email Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.reachinbox.io/api/v1/campaigns/emails/send",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"apiKey\": \"d5ab693c-0688-4102-8e43-769ea5c57ec3\", \"to\": \"{{ $json.Email }}\", \"from\": \"{{ $json.fromEmail }}\", \"subject\": \"{{ $json.emailSubject }}\", \"body\": \"{{ $json.emailBody }}\", \"trackOpens\": true, \"trackClicks\": true}",
+        "options": {}
+      },
+      "id": "send-reachinbox",
+      "name": "Send via Reachinbox",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email 1 Status": "Sent",
+            "Email 1 Date": "={{ $now.format('YYYY-MM-DD HH:mm:ss') }}",
+            "Status": "Sent",
+            "Last Updated": "={{ $now.format('YYYY-MM-DD HH:mm:ss') }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "update-sent",
+      "name": "Update Sent Status",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1450, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json.Status }}",
+              "rightValue": "Sent",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "condition-2",
+              "leftValue": "={{ $json['Email 1 Status'] }}",
+              "rightValue": "Sent",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "condition-3",
+              "leftValue": "={{ $json['Email 2 Status'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty"
+              }
+            },
+            {
+              "id": "condition-4",
+              "leftValue": "={{ $json['Email 1 Date'] }}",
+              "rightValue": "={{ $now.minus({ days: 5 }).toISO() }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "before"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-followup",
+      "name": "Filter 5-Day Followup",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 600]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Follow-up email templates\nconst teamMember = $json['Team Member'];\nconst firstName = $json['First Name'];\n\nconst followups = {\n  'Angela': {\n    subject: `Re: QMSR is live—your first 90 days matter`,\n    body: `Hi ${firstName},\\n\\nFollowing up on my email from last week about QMSR transition strategy.\\n\\nI realize timing may not align right now, but given that QMSR just took effect and FDA inspections are starting under the new rules, I wanted to make sure this was on your radar.\\n\\nIf a 20-minute strategy call would be valuable, I'm available Tuesday or Thursday afternoon. If not, no worries—happy to reconnect when timing is better.\\n\\nBest,\\nAngela`\n  },\n  'Catriona': {\n    subject: `Re: QMSR is live: your QMS gaps just became compliance risks`,\n    body: `Hi ${firstName},\\n\\nFollowing up on my email about QMSR compliance readiness.\\n\\nI realize timing may not align right now, but given that QMSR just took effect and inspection timelines are accelerating, I wanted to make sure this was on your radar.\\n\\nIf a 20-minute quality system assessment call would be valuable, I'm available this week. If not, no worries.\\n\\nBest,\\nCatriona`\n  },\n  'Sam': {\n    subject: `Re: Your AI device needs a PCCP—here's why`,\n    body: `Hi ${firstName},\\n\\nFollowing up on my email about PCCP strategy for AI/ML devices.\\n\\nI realize timing might not align right now, but given the increasing complexity of FDA's AI device expectations, I wanted to make sure this was on your radar.\\n\\nIf a 20-minute regulatory strategy call would be valuable, I'm available this week.\\n\\nBest,\\nSam`\n  },\n  'Jasmine': {\n    subject: `Re: Strategic CRO partnership vs. transactional project work`,\n    body: `Hi ${firstName},\\n\\nFollowing up on my email about strategic CRO partnerships.\\n\\nI realize strategic partnerships are longer conversations than transactional projects, but given your growth trajectory, this felt worth revisiting.\\n\\nIf a 20-minute strategic conversation would be valuable, I'm available. If timing's not right, no worries—happy to reconnect in Q2.\\n\\nBest,\\nJasmine`\n  },\n  'Jeannine': {\n    subject: `Re: The medtech CRO built for companies like yours`,\n    body: `Hi ${firstName},\\n\\nFollowing up on my email about Avania's medtech CRO services.\\n\\nI realize timing may not align right now, but given that regulatory and quality challenges are ongoing, I wanted to make sure this was on your radar.\\n\\nIf a 20-minute exploratory call would be valuable, I'm available this week.\\n\\nBest,\\nJeannine`\n  }\n};\n\nconst template = followups[teamMember] || followups['Jeannine'];\n\nreturn [{\n  json: {\n    ...$json,\n    emailSubject: template.subject,\n    emailBody: template.body,\n    fromEmail: teamMember.toLowerCase().replace(' ', '.') + '@avaniaclinical.com'\n  }\n}];"
+      },
+      "id": "build-followup",
+      "name": "Build Follow-up Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 600]
+    },
+    {
+      "parameters": {
+        "url": "https://api.reachinbox.io/api/v1/campaigns/emails/send",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\"apiKey\": \"d5ab693c-0688-4102-8e43-769ea5c57ec3\", \"to\": \"{{ $json.Email }}\", \"from\": \"{{ $json.fromEmail }}\", \"subject\": \"{{ $json.emailSubject }}\", \"body\": \"{{ $json.emailBody }}\", \"trackOpens\": true, \"trackClicks\": true}",
+        "options": {}
+      },
+      "id": "send-followup",
+      "name": "Send Follow-up",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1050, 600]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "Lead Database",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email 2 Status": "Sent",
+            "Email 2 Date": "={{ $now.format('YYYY-MM-DD HH:mm:ss') }}",
+            "Last Updated": "={{ $now.format('YYYY-MM-DD HH:mm:ss') }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "update-followup-sent",
+      "name": "Update Follow-up Sent",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1250, 600],
+      "credentials": {
+        "googleSheetsOAuth2Api": "google-sheets-credentials"
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Ready Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Ready Leads": {
+      "main": [
+        [
+          {
+            "node": "Filter Ready to Send",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter 5-Day Followup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Ready to Send": {
+      "main": [
+        [
+          {
+            "node": "Limit Batch Size",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit Batch Size": {
+      "main": [
+        [
+          {
+            "node": "Build Email Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Email Content": {
+      "main": [
+        [
+          {
+            "node": "Send via Reachinbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send via Reachinbox": {
+      "main": [
+        [
+          {
+            "node": "Update Sent Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter 5-Day Followup": {
+      "main": [
+        [
+          {
+            "node": "Build Follow-up Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Follow-up Email": {
+      "main": [
+        [
+          {
+            "node": "Send Follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Follow-up": {
+      "main": [
+        [
+          {
+            "node": "Update Follow-up Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": []
+}
