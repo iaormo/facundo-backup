@@ -46,6 +46,7 @@
 - #scaleplus (1469295024469446810): All ScalePlus.io related tasks
 - #client-new (1469856641733230673): New client channel
 - #social-media (1469861050852839434): Social media tasks
+- #ministry (1469877621440643172): All ministry related tasks
 - #lead-generation (1469566862403702930): Lead generation tasks and campaigns
 - #sales-and-marketing (1469566918737395818): Sales and marketing tasks
 - #development (1469566955093757993): All development work
