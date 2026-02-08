@@ -154,7 +154,7 @@ GAMING_GUIDE = {
             "Keep gaming in common areas (not bedrooms)"
         ]
     },
-    
+
     "Roblox": {
         "Basics": [
             "Platform with millions of user-created games",
@@ -219,7 +219,7 @@ MUSIC_GUIDE = {
             "Fender Play (structured lessons)"
         ]
     },
-    
+
     "Violin (Ysa)": {
         "Basics": [
             "Requires precise pitch (no frets like guitar)",
@@ -248,7 +248,7 @@ MUSIC_GUIDE = {
             "Join youth orchestra when ready (social, motivational)"
         ]
     },
-    
+
     "Piano (Sebastian)": {
         "Basics": [
             "Visual layout (easier to understand theory)",
@@ -337,6 +337,148 @@ ART_GUIDE = """
 
 
 # ============== BIKING MASTERY (For Ynigo) ==============
+
+CALISTHENICS_GUIDE = """
+# CALISTHENICS & WORKOUT GUIDE FOR YNIGO (13)
+
+## What is Calisthenics?
+Bodyweight training - using your own body as resistance.
+No gym needed, can do anywhere.
+Builds functional strength, flexibility, and body control.
+
+## Basics for Beginners
+
+### Foundational Movements
+**Push:**
+- Push-ups (knee push-ups to start)
+- Pike push-ups (shoulder focus)
+- Dips (using chair or bench)
+
+**Pull:**
+- Pull-ups (assisted with band or negatives)
+- Inverted rows (under table or low bar)
+- Australian pull-ups
+
+**Legs:**
+- Squats (bodyweight, then progress to pistol)
+- Lunges (walking, reverse)
+- Calf raises
+- Glute bridges
+
+**Core:**
+- Planks (start 30 seconds, build up)
+- Leg raises
+- Mountain climbers
+- Hollow body hold
+
+### Progression Path
+**Month 1-2: Foundation**
+- Push-ups: 3 sets of 5-10
+- Squats: 3 sets of 15-20
+- Plank: 3 sets of 30 seconds
+- Focus: Form over reps
+
+**Month 3-4: Building**
+- Push-ups: 3 sets of 15-20
+- Pull-up negatives: 3 sets of 5
+- Bulgarian split squats
+- Plank: 60+ seconds
+
+**Month 5+: Intermediate**
+- Diamond push-ups
+- Pull-ups (full)
+- Pistol squat progressions
+- L-sit holds
+
+## Sample Beginner Workout
+
+**Warm-up (5 min):**
+- Jumping jacks: 30 seconds
+- Arm circles: 30 seconds
+- Leg swings: 30 seconds
+- Light jog in place: 2 minutes
+
+**Workout (20-30 min):**
+1. Push-ups: 3 sets of 8-12
+2. Squats: 3 sets of 15
+3. Plank: 3 sets of 30-45 seconds
+4. Lunges: 3 sets of 10 each leg
+5. Leg raises: 3 sets of 10
+
+**Cool-down (5 min):**
+- Stretching
+- Deep breathing
+
+## Safety & Form
+
+### Proper Push-up Form
+- Hands shoulder-width apart
+- Body straight line (no sagging hips)
+- Full range of motion (chest to floor)
+- Control the descent (2 seconds down)
+
+### Proper Squat Form
+- Feet shoulder-width apart
+- Knees track over toes
+- Chest up, back straight
+- Hip crease below knees
+
+### Recovery
+- Rest days are when muscles grow
+- Sleep 8+ hours (especially for teens)
+- Protein: eggs, chicken, fish, beans
+- Stay hydrated
+
+## Motivation & Mindset
+
+### Teen-Specific Benefits
+- Confidence from physical capability
+- Discipline and consistency
+- Stress relief (academic pressure)
+- Better posture (counter phone use)
+- Foundation for lifelong fitness
+
+### Avoiding Burnout
+- Track progress (photos, reps)
+- Vary workouts (don't do same thing daily)
+- Find a workout buddy
+- Celebrate milestones (first pull-up!)
+- Remember: Consistency beats intensity
+
+## Faith Connection
+- Body is temple of Holy Spirit (1 Cor 6:19)
+- Stewardship of health
+- Discipline builds character
+- Perseverance through difficulty
+- Balance: Body health, but not obsession
+
+## Resources
+
+### YouTube Channels
+- ThenX (Chris Heria)
+- FitnessFAQs
+- Calisthenicmovement
+- Hybrid Calisthenics
+
+### Apps
+- Freeletics
+- ThenX app
+- Madbarz
+
+### Progression Videos
+- Push-up variations
+- Pull-up progressions
+- Pistol squat tutorial
+- Muscle-up roadmap
+
+## Conversation Starters
+- "What exercises are you working on?"
+- "Have you tried [specific move]?"
+- "What's your goal - strength, skills, or endurance?"
+- "Nutrition is half the battle - eating enough protein?"
+- "Rest days are important - muscles grow during recovery"
+- "That discipline will help in all areas of life"
+"""
 
 BIKING_GUIDE = """
 # BIKING GUIDE FOR YNIGO (13)
@@ -761,53 +903,61 @@ async def main():
     print("=" * 70)
     print("BIG BROTHER MASTERY - COMPLETE GUIDE")
     print("=" * 70)
-    
+
     print("\n1. CHARLOTTE MASON HOMESCHOOLING")
     print("-" * 40)
     print("   Philosophy: Atmosphere, Discipline, Life")
     print("   Ynigo (13): Independent work, logic, guitar")
     print("   Ysa (12): Art core, violin, nature journaling")
     print("   Sebastian (8): Play-based, short lessons, piano")
-    
+
     print("\n2. GAMING EXPERTISE")
     print("-" * 40)
     print("   Minecraft: Survival, Creative, Redstone, multiplayer safety")
     print("   Roblox: Extra safety needed, monitor closely")
     print("   Educational value: Problem-solving, creativity, collaboration")
     print("   Balance: Time limits, completion of schoolwork first")
-    
+
     print("\n3. MUSIC MASTERY")
     print("-" * 40)
     print("   Ynigo - Guitar: Chords G/C/D/Em/Am, 40-min practice")
     print("   Ysa - Violin: Intonation, bow control, scales")
     print("   Sebastian - Piano: Note reading, 10-15 min sessions")
-    
+
     print("\n4. ART GUIDE (Ysa)")
     print("-" * 40)
     print("   Fundamentals: Line, shape, shading, perspective")
     print("   Mediums: Pencil, colored pencil, watercolor, digital")
     print("   Mindset: Sketchbook for practice, not perfection")
-    
-    print("\n5. BIKING (Ynigo)")
+
+    print("\n5. CALISTHENICS & FITNESS (Ynigo)")
+    print("-" * 40)
+    print("   Foundation: Push-ups, squats, planks, lunges")
+    print("   Progression: Pull-ups, pistol squats, L-sits")
+    print("   Mindset: Consistency beats intensity")
+    print("   Faith: Body is temple of Holy Spirit")
+    print("   Safety: Form first, rest days essential")
+
+    print("\n6. BIKING (Ynigo)")
     print("-" * 40)
     print("   Types: Mountain, road, BMX")
     print("   Safety: Helmet essential, ABC check")
     print("   Skills: Balance, braking, cornering, obstacles")
-    
-    print("\n6. CHILD PSYCHOLOGY")
+
+    print("\n7. CHILD PSYCHOLOGY")
     print("-" * 40)
     print("   Sebastian (8): Concrete thinking, imagination, rules")
     print("   Ysa (12): Abstract thinking, puberty, peer importance")
     print("   Ynigo (13): Identity formation, intense emotions, future focus")
     print("   Siblings: Separate-cool-hear both-problem solve-restore")
-    
-    print("\n7. FAITH FORMATION")
+
+    print("\n8. FAITH FORMATION")
     print("-" * 40)
     print("   Sebastian: God loves me, Jesus is friend, simple prayers")
     print("   Ysa: Personal relationship, Holy Spirit, own the faith")
     print("   Ynigo: Worldview, apologetics, calling and purpose")
     print("   Victory Church: High School Blast, ushering, music ministry")
-    
+
     print("\n" + "=" * 70)
     print("READY TO BE THE BEST BIG BROTHER")
     print("=" * 70)
@@ -816,6 +966,7 @@ async def main():
     print("  ✅ Connect about Minecraft and Roblox")
     print("  ✅ Encourage music practice (guitar, violin, piano)")
     print("  ✅ Guide art development")
+    print("  ✅ Support calisthenics and fitness journey")
     print("  ✅ Talk bikes and safety")
     print("  ✅ Navigate sibling dynamics")
     print("  ✅ Support faith formation")
