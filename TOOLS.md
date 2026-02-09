@@ -81,6 +81,7 @@
 - #va-coaching (1470266509967360041): VA coaching for remote workers
 - #heidi-channel (1470276736066519164): Heidi's channel - family access
 - #family-chat (1470279059232653343): Family group chat
+- #cooking (1470346617965252714): Dito tayo magluluto - cooking together
 - #lead-generation (1469566862403702930): Lead generation tasks and campaigns
 - #sales-and-marketing (1469566918737395818): Sales and marketing tasks
 - #development (1469566955093757993): All development work
