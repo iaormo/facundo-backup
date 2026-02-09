@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Remote Work Coach Mastery
-All aspects of remote work, digital nomadism, and distributed teams
+Everything about remote work, productivity, tools, and work-from-home success
 """
 
 import asyncio
@@ -12,1073 +12,1066 @@ import asyncio
 REMOTE_WORK_FOUNDATIONS = """
 # REMOTE WORK MASTERY
 
+## The Remote Work Revolution
+
+### Why Remote Work Works
+**Benefits for Workers:**
+- No commute (save 1-2 hours daily)
+- Flexible schedule
+- Better work-life balance
+- Location independence
+- Customizable workspace
+- Cost savings (transport, food, clothes)
+- Health benefits (less stress, better sleep)
+
+**Benefits for Companies:**
+- Access global talent
+- Lower overhead (no office)
+- Higher productivity (studies show)
+- Reduced turnover
+- Business continuity (disasters)
+- Environmental benefits
+
+**Benefits for Society:**
+- Reduced traffic congestion
+- Lower carbon emissions
+- Revitalized small towns
+- Economic distribution
+- Family stability
+
 ## Types of Remote Work
 
-### Fully Remote
-- Never go to office
-- Work from anywhere
-- Complete location independence
-- Examples: GitLab, Zapier, Automattic
+### FULLY REMOTE
+- 100% work from home
+- No office presence required
+- Fully distributed team
+- Digital nomad possible
 
-### Hybrid Remote
-- Some days in office, some at home
-- Flexible scheduling
-- Most common post-COVID
-- Examples: Most tech companies now
+### HYBRID
+- Part office, part home
+- 2-3 days in office common
+- Flexibility with face-time
+- Many companies post-COVID
 
-### Distributed Teams
-- Company has no central office
-- Employees worldwide
-- Async communication priority
-- Multiple time zones
+### REMOTE-FRIENDLY
+- Office-based but allows WFH
+- Ad hoc remote days
+- Less structured
+- Manager discretion
 
-### Digital Nomad
-- Work while traveling
-- No fixed location
-- Cafes, coworking spaces, Airbnb
-- Visa/tax considerations
+### FLEXIBLE/FREELANCE
+- Project-based
+- Multiple clients
+- Self-directed
+- Entrepreneurial
 
----
+## Remote Work Statistics (2024)
+- 16% of companies fully remote
+- 62% offer some remote work
+- 98% want some remote option
+- 35% would take pay cut for remote
+- Remote workers 13% more productive
+- 77% report better work-life balance
 
-## Remote Work Benefits
+## Common Remote Work Challenges
 
-### For Workers
-- **No commute**: Save 1-2 hours daily
-- **Flexibility**: Work when you're most productive
-- **Location freedom**: Live anywhere
-- **Cost savings**: No work wardrobe, less eating out
-- **Health**: Less stress, more time for exercise
-- **Family**: More time with kids, care for elderly
-
-### For Companies
-- **Talent pool**: Hire worldwide
-- **Cost savings**: Less office space
-- **Productivity**: Many workers more productive at home
-- **Retention**: Higher job satisfaction
-- **Business continuity**: Pandemic/disaster proof
-- **Environmental**: Less commuting emissions
-
----
-
-## Remote Work Challenges
-
-### Isolation and Loneliness
+### ISOLATION & LONELINESS
 - Missing social interaction
-- No water cooler chat
-- Harder to build relationships
-
-### Work-Life Boundaries
-- Hard to "turn off"
-- Work creeps into personal time
-- Family interruptions
-
-### Communication Barriers
-- Async delays
-- Lack of nonverbal cues
-- Information silos
-- Time zone difficulties
-
-### Career Visibility
-- "Out of sight, out of mind"
-- Harder to get promoted
-- Less mentorship
-- Reduced networking
-
-### Home Environment Issues
-- No dedicated workspace
-- Internet problems
-- Distractions (kids, pets, TV)
-- Ergonomic problems
-
-### Mental Health
 - Cabin fever
-- Burnout from overwork
-- Lack of variety in environment
-- Reduced exercise
+- Blurred boundaries
+
+### COMMUNICATION
+- Async vs. sync
+- Information silos
+- Misunderstandings
+- Time zone issues
+
+### PRODUCTIVITY
+- Distractions at home
+- Lack of structure
+- Overworking
+- Procrastination
+
+### CAREER GROWTH
+- Out of sight, out of mind
+- Less visibility
+- Harder to network
+- Promotion concerns
+
+### TECHNOLOGY
+- Internet reliability
+- Security concerns
+- Tool overload
+- Tech support
+
+### WORK-LIFE BOUNDARIES
+- Never truly off
+- Home becomes office
+- Family interruptions
+- Guilt when not working
 """
 
 
-# ============== SETTING UP REMOTE WORK ==============
+# ============== REMOTE WORK SETUP ==============
 
-SETTING_UP_REMOTE = """
-# SETTING UP FOR REMOTE WORK SUCCESS
+REMOTE_WORK_SETUP = """
+# THE PERFECT REMOTE WORK SETUP
 
-## Home Office Setup
+## Home Office Essentials
 
-### Dedicated Workspace
-- **Separate room if possible**
+### THE WORKSPACE
+**Dedicated Space:**
+- Separate room ideal
+- Corner of room minimum
 - Door that closes
-- Away from high-traffic areas
-- Consistent location (conditions brain for work mode)
+- Natural light preferred
+- Quiet location
 
-### Ergonomics
-- **Chair**: Adjustable, lumbar support ($200-1000)
-- **Desk**: Height appropriate (29-30 inches standard)
-- **Monitor**: Eye level, arm's length away
-- **Keyboard/Mouse**: Neutral wrist position
-- **Footrest**: If feet don't reach floor
-- **Lighting**: Natural + task lighting, reduce glare
+**Ergonomics:**
+- Adjustable chair (lumbar support)
+- Desk at elbow height
+- Monitor at eye level (top 1/3)
+- Keyboard and mouse positioned for neutral wrists
+- Footrest if needed
+- 20-20-20 rule (every 20 min, look 20 ft away for 20 sec)
 
-### Equipment
-**Essential:**
-- Reliable laptop/desktop
-- Quality webcam (1080p minimum)
-- Good microphone or headset
-- Second monitor (huge productivity boost)
-- High-speed internet (25+ Mbps up/down)
-- Backup power (UPS for outages)
+**Lighting:**
+- Natural light best
+- Task lighting for paperwork
+- Avoid glare on screen
+- Blue light filters for evening
 
-**Nice to Have:**
-- Standing desk or converter
-- External keyboard/mouse
-- Ring light for video calls
+**Temperature:**
+- 68-72°F (20-22°C) optimal
+- Fan or heater as needed
+- Layers for adjustment
+
+### TECHNOLOGY SETUP
+**Internet:**
+- Minimum 25 Mbps download
+- 50+ Mbps for video calls
+- Ethernet cable backup
+- Mobile hotspot backup
+- Mesh WiFi for large homes
+
+**Computer:**
+- Dual monitors (productivity boost)
+- External keyboard and mouse
+- Laptop stand or riser
+- Webcam (1080p minimum)
+- Microphone (USB or headset)
+- Speakers or headphones
+
+**Video Conferencing:**
+- Ring light or good lighting
+- Clean background (or virtual)
 - Noise-canceling headphones
-- Document camera
-- Whiteboard
+- Test audio/video before calls
 
-### Internet Setup
-- **Speed**: 25 Mbps minimum, 100+ preferred
-- **Upload**: Critical for video calls (10+ Mbps)
-- **Ethernet**: More stable than WiFi
-- **Backup**: Mobile hotspot for emergencies
-- **Router**: Quality router, good placement
-- **Mesh system**: For larger homes
+**Power:**
+- UPS (Uninterruptible Power Supply)
+- Surge protector
+- Cable management
+- Chargers accessible
 
----
+### ESSENTIAL TOOLS
+**Communication:**
+- Slack, Microsoft Teams, Discord
+- Zoom, Google Meet, Teams
+- Email management
+- Async video (Loom)
 
-## Daily Routines for Remote Work
+**Project Management:**
+- Asana, Trello, Monday.com
+- Notion, ClickUp
+- Jira (development)
+- Linear (modern dev)
 
-### Morning Routine
-**Example Schedule:**
-- 7:00: Wake, shower, dress (work clothes, not pajamas)
-- 7:30: Breakfast
-- 8:00: Exercise/movement
-- 8:30: Plan day, review priorities
-- 9:00: Start work
+**Documentation:**
+- Google Workspace
+- Microsoft 365
+- Notion, Confluence
+- Dropbox, Google Drive
 
-### Transition Rituals
-- **Commute substitute**: Walk around block
-- **Change clothes**: Work clothes vs. home clothes
-- **Physical boundary**: Enter workspace = work mode
-- **Music cue**: Specific playlist for work
+**Time Management:**
+- Calendar (Google, Outlook)
+- Time tracking (Toggl, Clockify)
+- Focus apps (Forest, Freedom)
+- Pomodoro timer
 
-### Work Schedule
+**Security:**
+- VPN (ProtonVPN, Mullvad)
+- Password manager (Bitwarden, 1Password)
+- 2FA on everything
+- Encrypted backups
+
+## Setting Boundaries
+
+### PHYSICAL BOUNDARIES
+- Door closed = working
+- Door open = available
+- Visual signals (sign, light)
+- Dedicated workspace
+- Leave workspace for breaks
+
+### TIME BOUNDARIES
+- Set working hours
+- Communicate to family
+- Calendar blocks for focus
+- End-of-day ritual
+- No work in bedroom
+
+### DIGITAL BOUNDARIES
+- Separate work/personal devices (ideal)
+- Different browsers/profiles
+- Turn off notifications after hours
+- Separate email accounts
+- Work phone number (Google Voice)
+
+## The Remote Work Routine
+
+### MORNING ROUTINE
+**Start Time:**
+- Consistent wake time
+- Morning rituals (exercise, meditation)
+- Get dressed (work clothes signal work)
+- Commute ritual (walk, coffee, music)
+- Start at set time
+
+**Opening Ritual:**
+- Review calendar
+- Check messages
+- Set daily priorities
+- First task (eat the frog)
+
+### DAILY STRUCTURE
 **Time Blocking:**
-- Deep work: 2-3 hours uninterrupted
-- Meetings: Cluster together
-- Email: Check 2-3 times daily, not constantly
-- Breaks: 5 min every hour, 30 min for lunch
+- Deep work blocks (2-4 hours)
+- Meeting blocks
+- Email/admin blocks
+- Break blocks
 
-### End of Day Routine
-- **Shutdown ritual**: Review accomplishments, plan tomorrow
-- **Close laptop**: Physical signal work is done
-- **Change clothes**: Transition to personal time
-- **Leave workspace**: Don't return until tomorrow
+**The 4-Hour Deep Work:**
+- Most important work first
+- No interruptions
+- Full focus
+- Batch shallow work
 
----
+**Energy Management:**
+- Work with natural rhythms
+- Ultradian rhythms (90-min cycles)
+- Breaks every 90 minutes
+- Naps if needed (20 min)
+
+### EVENING ROUTINE
+**Shutdown Ritual:**
+- Review completed tasks
+- Plan tomorrow
+- Clear inbox
+- Close all work tabs
+- Physically leave workspace
+
+**Transition Home:**
+- Change clothes
+- Walk/exercise
+- Family time
+- Hobbies
+- No work email
 
 ## Productivity Systems
 
-### Deep Work
-- **Definition**: Focused, uninterrupted work on important tasks
-- **Duration**: 90-120 minute blocks
-- **Environment**: No notifications, closed door
-- **Energy**: Do when energy highest (morning for most)
+### GETTING THINGS DONE (GTD)
+- Capture everything
+- Clarify next actions
+- Organize by context
+- Review weekly
+- Engage with trust
 
-### Task Management
-**Methods:**
-- **GTD (Getting Things Done)**: Capture, clarify, organize, review, engage
-- **Eisenhower Matrix**: Urgent/Important quadrants
-- **MITs (Most Important Tasks)**: 3 critical tasks daily
-- **Time Blocking**: Schedule everything on calendar
+### EAT THE FROG
+- Hardest task first
+- Willpower is highest in morning
+- Momentum for rest of day
+- Procrastination killer
 
-**Tools:**
-- Todoist
-- Things 3
-- Notion
-- Obsidian
-- Microsoft To Do
+### TIME BLOCKING
+- Schedule everything
+- Protect deep work
+- Batch similar tasks
+- Buffer time between
 
-### Focus Techniques
-- **Pomodoro**: 25 min work, 5 min break
-- **52/17**: 52 min work, 17 min break
-- **90-minute cycles**: Match ultradian rhythms
-- **Don't Break the Chain**: Daily habit streaks
+### POMODORO TECHNIQUE
+- 25 min work, 5 min break
+- 4 cycles = longer break (15-30 min)
+- Forces focus
+- Prevents burnout
 
-### Avoiding Distractions
-- **Phone**: In another room, Do Not Disturb
-- **Browser**: Blockers (Freedom, Cold Turkey)
-- **Notifications**: Turn off all non-essential
-- **Communication**: Check email/Slack at set times
-- **People**: Set boundaries with family/roommates
-
----
+### THE 2-MINUTE RULE
+- If task < 2 min, do it now
+- Clears small items
+- Reduces cognitive load
+- Keeps inbox manageable
 
 ## Communication Best Practices
 
-### Async First
-- **Default to async**: Don't require immediate response
-- **Document everything**: Write it down
-- **Status updates**: Regular updates without meetings
-- **Decisions**: Document in shared space
-
-### Synchronous Communication
-**When to Use:**
-- Complex discussions
-- Brainstorming
-- Sensitive topics
-- Building relationships
-
-**Video Call Etiquette:**
-- Camera on (builds connection)
-- Good lighting on face
-- Mute when not speaking
-- Look at camera, not screen
-- Background appropriate
-- Test tech before important calls
-
-### Written Communication
-**Email:**
-- Clear subject line
-- Short paragraphs
-- Bold key points
-- Clear call to action
+### ASYNC FIRST
+- Default to async communication
+- Documentation over discussion
+- Record meetings for later
+- Respect time zones
 - Response time expectations
 
-**Slack/Teams:**
-- Use threads
-- @mention intentionally
-- Status: Set when away/focused
-- Channels: Organize by topic
-- Emojis for quick reactions
+### MEETING ETIQUETTE
+- Camera on (builds connection)
+- Mute when not speaking
+- Agenda shared beforehand
+- Action items documented
+- Start/end on time
+- Record for absent members
 
-### Documentation
-- **Wiki/Notion**: Central knowledge base
-- **Meeting notes**: Always shared
-- **Decisions**: Document rationale
-- **Processes**: Written procedures
-- **Handbooks**: Team culture and practices
+### WRITTEN COMMUNICATION
+- Clear subject lines
+- Bullet points over paragraphs
+- Bold key information
+- Call to action
+- Appropriate channel (urgency)
 
----
-
-## Time Management
-
-### Dealing with Time Zones
-- **Core hours**: Overlap for meetings
-- **Async**: Work outside core hours
-- **Rotating meeting times**: Share burden
-- **Time zone awareness**: Know where team is
-- **Tools**: World Time Buddy, Every Time Zone
-
-### Energy Management
-- **Circadian rhythms**: Work with body clock
-- **Peak performance**: Schedule hard tasks then
-- **Slump time**: Administrative tasks
-- **Exercise**: Boosts energy and focus
-- **Sleep**: Foundation of productivity
-
-### Boundaries
-**With Work:**
-- Set work hours and communicate
-- Don't check email after hours
-- Use separate devices if possible
-- Vacation means truly off
-
-**With Family:**
-- Closed door = do not disturb
-- Sign for availability
-- Scheduled family time
-- Involve family in planning
-
----
-
-## Health and Wellness
-
-### Physical Health
-- **Movement**: Stand every hour, walk during calls
-- **Exercise**: Schedule like meetings
-- **Ergonomics**: Prevent repetitive strain
-- **Eyes**: 20-20-20 rule (every 20 min, look 20 feet away for 20 sec)
-- **Sunlight**: Get outside daily
-
-### Mental Health
-- **Social connection**: Video calls with colleagues
-- **Local community**: Coworking spaces, meetups
-- **Variety**: Work from different locations
-- **Nature**: Spend time outdoors
-- **Hobbies**: Non-work interests
-
-### Preventing Burnout
-**Signs:**
-- Exhaustion
-- Cynicism about work
-- Reduced effectiveness
-
-**Prevention:**
-- Regular breaks
-- Use vacation time
-- Hobbies and social life
-- Exercise
-- Sleep 7-9 hours
-- Set realistic expectations
-- Talk to manager if overwhelmed
+### AVAILABILITY SIGNALING
+- Status updates (Slack/Teams)
+- Calendar blocks visible
+- Working hours set
+- Response time communicated
+- Out-of-office messages
 """
 
 
-# ============== REMOTE WORK TOOLS ==============
+# ============== REMOTE WORK SKILLS ==============
 
-REMOTE_TOOLS = """
-# REMOTE WORK TOOLS & TECHNOLOGY
+REMOTE_WORK_SKILLS = """
+# ESSENTIAL REMOTE WORK SKILLS
 
-## Communication Tools
+## Self-Management
 
-### Video Conferencing
-**Zoom:**
-- Best video quality
-- Breakout rooms
-- Webinars
-- Recording
-- Virtual backgrounds
+### TIME MANAGEMENT
+**Prioritization:**
+- Eisenhower Matrix (urgent/important)
+- ABC method
+- MIT (Most Important Tasks)
+- 80/20 Rule (Pareto Principle)
 
-**Google Meet:**
-- Integrates with Google Workspace
-- Simple interface
-- Live captions
+**Planning:**
+- Daily planning (5-10 min)
+- Weekly review (30 min)
+- Monthly goals
+- Quarterly OKRs
 
-**Microsoft Teams:**
-- Office 365 integration
-- Channel-based organization
-- Good for enterprise
+**Execution:**
+- Single-tasking (not multitasking)
+- Flow state cultivation
+- Batching similar tasks
+- Deadlines (even self-imposed)
 
-**Whereby:**
-- No download required
-- Simple rooms
-- Good for quick calls
+### SELF-MOTIVATION
+**Intrinsic Motivation:**
+- Connect to purpose
+- Autonomy (choice)
+- Mastery (growth)
+- Purpose (meaning)
 
-### Team Chat
-**Slack:**
-- Industry standard
-- Integrations with everything
-- Threads, channels, DMs
-- Status and presence
+**Accountability:**
+- Accountability partner
+- Public commitments
+- Progress tracking
+- Consequences/rewards
 
-**Microsoft Teams:**
-- Good for Office 365 users
-- Video + chat integration
-- File collaboration
+**Overcoming Procrastination:**
+- 5-minute rule (just start)
+- Break tasks down
+- Environment design
+- Understand resistance
 
-**Discord:**
-- Free
-- Voice channels
-- Community building
-- Not just for gaming
+### SELF-CARE
+**Physical Health:**
+- Regular exercise
+- Stand/move hourly
+- Eye strain prevention
+- Good ergonomics
+- Adequate sleep
 
-**Signal/Wire:**
-- End-to-end encryption
-- Privacy-focused
+**Mental Health:**
+- Stress management
+- Mindfulness/meditation
+- Social connection
+- Professional support
+- Boundaries
 
-### Email
-- **Gmail**: Best filters, search
-- **Outlook**: Enterprise standard
-- **Superhuman**: Speed (expensive)
-- **Spark**: Smart inbox
+**Preventing Burnout:**
+- Recognize warning signs
+- Regular breaks
+- Vacation/time off
+- Hobbies outside work
+- Saying no
 
----
+## Digital Skills
 
-## Project Management
+### DIGITAL LITERACY
+**Essential Proficiency:**
+- Cloud storage and sharing
+- Video conferencing
+- Collaborative documents
+- Project management tools
+- Basic troubleshooting
 
-### Kanban Boards
-**Trello:**
-- Simple, visual
-- Good for small teams
-- Power-ups for features
+**Advanced Skills:**
+- Automation (Zapier, Make)
+- Data analysis
+- Basic coding/scripting
+- Design tools (Canva, Figma)
+- AI tools (ChatGPT, etc.)
 
-**Asana:**
-- Flexible views
-- Good for complex projects
-- Timeline view
+### CYBERSECURITY
+**Best Practices:**
+- Strong unique passwords
+- 2FA everywhere
+- VPN on public WiFi
+- Recognize phishing
+- Secure home network
+- Regular updates
+- Backup data
 
-**Monday.com:**
-- Visual, customizable
-- Automation
-- Dashboards
-
-**Notion:**
-- All-in-one workspace
-- Databases + pages
-- Highly customizable
-
-### Agile Tools
-**Jira:**
-- Software development standard
-- Scrum and Kanban
-- Reporting
-- Complex
-
-**Linear:**
-- Modern, fast
-- Good for software teams
-- Keyboard shortcuts
-
-**ClickUp:**
-- Feature-rich
-- Multiple views
-- Docs, goals, time tracking
-
----
-
-## Documentation & Knowledge
-
-### Wikis
-**Notion:**
-- Pages + databases
-- Team collaboration
-- Templates
-- API for automation
-
-**Confluence:**
-- Enterprise standard
-- Integrates with Jira
-- Spaces for organization
-
-**GitBook:**
-- Beautiful docs
-- Good for public/private
+### DIGITAL ORGANIZATION
+**File Management:**
+- Consistent naming
+- Folder structure
+- Cloud sync
+- Regular cleanup
 - Version control
 
-**Obsidian:**
-- Personal knowledge management
-- Linking notes
-- Local files
-- Markdown
+**Information Management:**
+- Note-taking system
+- Bookmark organization
+- Password manager
+- Digital decluttering
 
-### File Storage
-**Google Drive:**
-- Collaboration on docs
-- 15GB free
-- Good search
+## Communication Skills
 
-**Dropbox:**
-- Reliable sync
-- Smart Sync (save space)
-- Paper (collaboration)
+### WRITTEN COMMUNICATION
+**Clarity:**
+- Simple language
+- Short sentences
+- Active voice
+- Logical structure
 
-**OneDrive:**
-- Office 365 integration
-- Good for Windows users
+**Tone:**
+- Friendly but professional
+- Emoji judiciously
+- Avoid misunderstandings
+- Assume positive intent
 
-**Box:**
-- Enterprise security
-- Good admin controls
+**Efficiency:**
+- TL;DR summaries
+- Bullet points
+- Clear asks
+- Appropriate length
 
----
+### VERBAL COMMUNICATION
+**Video Calls:**
+- Camera presence
+- Clear audio
+- Engaged body language
+- Effective speaking pace
 
-## Time Tracking & Productivity
+**Presentation:**
+- Screen sharing mastery
+- Engaging delivery
+- Interactive elements
+- Clear visuals
 
-### Time Tracking
-**Toggl:**
-- Simple timer
-- Reporting
-- Integrations
+### ACTIVE LISTENING
+**In Remote Context:**
+- Minimize distractions
+- Take notes
+- Clarify understanding
+- Summarize key points
+- Follow up in writing
 
-**Harvest:**
-- Invoicing
-- Expense tracking
-- Team time tracking
+## Collaboration Skills
 
-**Clockify:**
-- Free version
-- Timesheets
-- Projects and tasks
+### VIRTUAL TEAMWORK
+**Building Trust:**
+- Reliability (do what you say)
+- Vulnerability (appropriate sharing)
+- Video calls (face-to-face)
+- Consistent communication
 
-**RescueTime:**
-- Automatic tracking
-- Productivity scores
-- Focus sessions
+**Managing Conflict:**
+- Address issues directly
+- Assume good intent
+- Focus on issues, not people
+- Clear written documentation
 
-### Focus Tools
-**Freedom:**
-- Block websites/apps
-- Scheduled sessions
-- Locked mode (can't disable)
+**Inclusion:**
+- Equal airtime in meetings
+- Time zone consideration
+- Cultural sensitivity
+- Remote-first practices
 
-**Cold Turkey:**
-- Hardcore blocker
-- Nuclear option
-- Scheduled blocking
+### CROSS-FUNCTIONAL WORK
+**Stakeholder Management:**
+- Understand their goals
+- Clear communication
+- Regular updates
+- Manage expectations
 
-**Forest:**
-- Gamified focus
-- Plant trees
-- Mobile app
+**Negotiation:**
+- Win-win mindset
+- Clear priorities
+- Document agreements
+- Follow through
 
-**Brain.fm:**
-- Music for focus
-- Science-backed
-- Different modes
+## Continuous Learning
 
----
+### SKILL DEVELOPMENT
+**Technical Skills:**
+- Industry-specific tools
+- Automation
+- Data literacy
+- AI proficiency
 
-## Security Tools
+**Soft Skills:**
+- Communication
+- Leadership
+- Emotional intelligence
+- Adaptability
 
-### Password Management
-**1Password:**
-- Best overall
-- Travel mode
-- Family sharing
+### STAYING CURRENT
+**Industry Trends:**
+- Follow thought leaders
+- Read industry publications
+- Attend virtual conferences
+- Online courses
+- Podcasts/webinars
 
-**Bitwarden:**
-- Open source
-- Free version excellent
-- Self-host option
-
-**LastPass:**
-- Popular
-- Free version limited now
-
-### VPN
-**NordVPN:**
-- Fast
-- Many servers
-- Good security
-
-**ExpressVPN:**
-- Easy to use
-- Reliable
-- Good for streaming
-
-**Mullvad:**
-- Privacy-focused
-- Anonymous accounts
-- No logs
-
-### Two-Factor Authentication
-**Authy:**
-- Cloud backup
-- Multiple devices
-- TOTP support
-
-**YubiKey:**
-- Hardware key
-- Highest security
-- Physical possession required
-
----
-
-## Collaboration & Whiteboarding
-
-### Whiteboards
-**Miro:**
-- Infinite canvas
-- Templates
-- Voting and timer
-- Integrations
-
-**MURAL:**
-- Facilitation features
-- Templates
-- Enterprise focus
-
-**FigJam:**
-- Figma's whiteboard
-- Good for designers
-- Free tier
-
-**Excalidraw:**
-- Open source
-- Hand-drawn style
-- Simple
-
-### Design Collaboration
-**Figma:**
-- Design + prototyping
-- Real-time collaboration
-- Developer handoff
-- Free tier
-
-**Adobe Creative Cloud:**
-- Industry standard
-- Expensive
-- Full suite
-
-**Canva:**
-- Easy graphic design
-- Templates
-- Good for non-designers
-
----
-
-## Automation & Integration
-
-### Zapier
-- Connect 3000+ apps
-- No-code automation
-- Workflows (Zaps)
-- Multi-step automations
-
-### Make (Integromat)
-- Visual automation builder
-- More powerful than Zapier
-- Complex logic
-- Better value
-
-### IFTTT
-- Simple automations
-- Consumer-focused
-- Applets
-- Good for personal use
-
-### n8n
-- Open source
-- Self-hosted option
-- Powerful
-- Growing fast
-
----
-
-## Hardware Recommendations
-
-### Laptops
-**MacBook Air/Pro:**
-- Best battery life
-- Build quality
-- macOS ecosystem
-- Expensive
-
-**ThinkPad X1 Carbon:**
-- Best keyboard
-- Business durability
-- Linux compatible
-
-**Dell XPS:**
-- Windows alternative to Mac
-- Good screen
-- Solid build
-
-### Monitors
-**Dell UltraSharp:**
-- Color accuracy
-- USB-C hub
-- Adjustable stand
-
-**LG UltraFine:**
-- Mac optimized
-- 4K/5K options
-- USB-C
-
-**Portable monitors:**
-- For travel
-- USB-C powered
-- Asus, Lenovo options
-
-### Accessories
-- **Webcam**: Logitech Brio (4K), Razer Kiyo (ring light)
-- **Microphone**: Blue Yeti, Audio-Technica ATR2100
-- **Headphones**: Sony WH-1000XM4, Bose QC45
-- **Keyboard**: Keychron (mechanical), Logitech MX Keys
-- **Mouse**: Logitech MX Master 3, ergonomic options
-- **Desk**: Fully Jarvis (standing), Ikea Bekant (budget)
-- **Chair**: Herman Miller Aeron, Steelcase Leap, Branch Ergonomic (budget)
+**Remote Work Trends:**
+- New tools and best practices
+- Changing policies
+- Global regulations
+- Tax implications
 """
 
 
-# ============== REMOTE TEAM LEADERSHIP ==============
+# ============== MANAGING REMOTE TEAMS ==============
 
-REMOTE_LEADERSHIP = """
-# LEADING REMOTE TEAMS
+MANAGING_REMOTE_TEAMS = """
+# MANAGING REMOTE TEAMS
 
-## Remote Management Principles
+## Remote Leadership
 
-### Trust Over Surveillance
-- Measure outcomes, not hours
-- Results-only work environment (ROWE)
-- Autonomy breeds motivation
-- Don't micromanage
+### TRUST-BASED MANAGEMENT
+**Output Over Input:**
+- Focus on results, not hours
+- Clear expectations
+- Autonomy with accountability
+- Regular check-ins (not micromanagement)
 
-### Communication Cadence
-- **Daily**: Async standups (written)
-- **Weekly**: Team meeting (video)
-- **Bi-weekly**: 1-on-1s
-- **Monthly**: All-hands
-- **Quarterly**: Strategic planning
+**Measuring Performance:**
+- Objective Key Results (OKRs)
+- Key Performance Indicators (KPIs)
+- Project milestones
+- Quality of work
+- Peer feedback
 
-### Documentation Culture
-- **Default to open**: Transparency
-- **Write it down**: Decisions, processes
-- **Handbook first**: Rules in writing
-- **Meeting notes**: Always shared
+### COMMUNICATION RHYTHMS
+**Daily:**
+- Async standups (written updates)
+- Quick check-ins as needed
+- Available for questions
 
----
+**Weekly:**
+- Team meeting (video)
+- 1-on-1s with direct reports
+- Project updates
+
+**Monthly:**
+- All-hands meeting
+- Performance reviews
+- Goal setting
+- Team building
+
+**Quarterly:**
+- Strategic planning
+- OKR reviews
+- Retrospectives
+
+### MEETING BEST PRACTICES
+**Types of Meetings:**
+- **Standup:** 15 min, async or sync, blockers and updates
+- **1-on-1:** 30 min, employee-led, development focus
+- **Team Meeting:** 60 min, discussion and decisions
+- **All-Hands:** Company updates, Q&A, culture
+- **Retrospective:** What worked, didn't, action items
+
+**Meeting Efficiency:**
+- Always have agenda
+- Start and end on time
+- Optional meetings (record)
+- Document decisions
+- Action items with owners
 
 ## Building Remote Culture
 
-### Onboarding Remote Employees
-1. **Welcome package**: Swag, equipment
-2. **Buddy system**: Paired with experienced remote worker
-3. **Documentation**: Handbook, processes
-4. **Meetings**: Introduce to team
-5. **30-60-90 day plan**: Clear expectations
-6. **Check-ins**: Frequent at first
+### INTENTIONAL CULTURE
+**Core Values:**
+- Document and live them
+- Hire for culture fit
+- Recognize value-aligned behavior
+- Address misalignment
 
-### Team Bonding
-**Virtual Activities:**
+**Rituals:**
 - Virtual coffee chats
+- Friday wins celebration
+- Birthday celebrations
+- Work anniversaries
+- Fun Slack channels
+
+**Onboarding:**
+- Structured 30-60-90 day plan
+- Buddy system
+- Culture documentation
+- Tool training
+- Early wins
+
+### TEAM BUILDING
+**Virtual Activities:**
 - Online games (Jackbox, Among Us)
-- Remote lunch (eat together on video)
-- Show and tell
-- Book club
+- Virtual happy hours
+- Trivia sessions
+- Lunch and learns
+- Book clubs
 
-**In-Person:**
-- Annual retreat
+**In-Person Gatherings:**
+- Annual retreats
 - Quarterly meetups
-- Team dinners
-- Coworking days
+- Onboarding in-person
+- Project kickoffs
+- Budget for travel
 
-### Recognition
-- Public praise in team channels
-- Remote-friendly rewards (gift cards, experiences)
-- Career development opportunities
-- Shoutouts in team meetings
+### INCLUSION
+**Time Zone Fairness:**
+- Rotate meeting times
+- Record meetings
+- Async communication
+- No single timezone dominates
 
----
+**Cultural Sensitivity:**
+- Holiday awareness
+- Communication styles
+- Language barriers
+- Different work norms
 
-## Hiring for Remote
+**Psychological Safety:**
+- Admit mistakes
+- Ask questions
+- Disagree respectfully
+- Speak up about issues
 
-### What to Look For
-**Remote Work Skills:**
-- Self-motivation
-- Communication (written especially)
-- Time management
-- Proactive problem-solving
-- Comfort with technology
+## Remote Hiring & Onboarding
 
-**Interview Questions:**
-- "Tell me about your remote work setup"
-- "How do you stay productive at home?"
-- "Describe a time you solved a problem asynchronously"
-- "How do you communicate complex ideas in writing?"
+### REMOTE HIRING
+**Job Descriptions:**
+- Remote-specific requirements
+- Time zone expectations
+- Communication expectations
+- Equipment provided?
+- Legal/tax considerations
 
-### Remote Job Boards
+**Interview Process:**
+- Video interviews
+- Async communication test
+- Culture fit assessment
+- Reference checks (remote experience)
+- Trial project (paid)
+
+**Red Flags:**
+- Poor written communication
+- Unresponsive
+- No self-management evidence
+- Inflexible schedule
+- Unrealistic expectations
+
+### ONBOARDING REMOTE EMPLOYEES
+**Pre-Start:**
+- Equipment shipped
+- Accounts created
+- Welcome package
+- First week schedule
+- Buddy assignment
+
+**First Day:**
+- Video welcome
+- IT setup session
+- Team introductions
+- Culture overview
+- First task assigned
+
+**First Week:**
+- Daily check-ins
+- Training modules
+- Shadowing sessions
+- Documentation review
+- Feedback session
+
+**First Month:**
+- Weekly 1-on-1s
+- Project participation
+- Feedback loops
+- Social connections
+- Goal setting
+
+## Performance Management
+
+### GOAL SETTING
+**SMART Goals:**
+- Specific
+- Measurable
+- Achievable
+- Relevant
+- Time-bound
+
+**OKRs (Objectives & Key Results):**
+- Objective: Qualitative goal
+- Key Results: 3-5 measurable outcomes
+- Aspirational (70% success rate)
+- Quarterly cadence
+
+### FEEDBACK
+**Continuous Feedback:**
+- Regular 1-on-1s
+- Immediate recognition
+- Constructive in private
+- Public praise
+- 360 feedback
+
+**Performance Reviews:**
+- Quarterly check-ins
+- Annual comprehensive
+- Self-assessment
+- Peer feedback
+- Development plans
+
+### DIFFICULT CONVERSATIONS
+**Addressing Issues:**
+- Document concerns
+- Specific examples
+- Impact explanation
+- Improvement plan
+- Follow-up timeline
+
+**Remote Termination:**
+- Legal compliance
+- Security access removal
+- Equipment return
+- Knowledge transfer
+- Dignity maintained
+
+## Remote Work Policy
+
+### ESSENTIAL POLICIES
+**Work Hours:**
+- Core hours vs. flexible
+- Time zone expectations
+- Overtime policy
+- Weekend work
+
+**Communication:**
+- Response time expectations
+- After-hours contact
+- Emergency procedures
+- Meeting norms
+
+**Equipment & Expenses:**
+- Company-provided equipment
+- Internet stipend
+- Home office allowance
+- Tech support
+
+**Security:**
+- VPN requirements
+- Data protection
+- Device policies
+- Incident reporting
+
+**Time Off:**
+- PTO policy
+- Sick leave
+- Holidays
+- Unlimited PTO considerations
+
+**Legal:**
+- Work location restrictions
+- Tax implications
+- Workers compensation
+- Confidentiality
+
+### POLICY COMMUNICATION
+- Employee handbook
+- Regular updates
+- Training sessions
+- Acknowledgment
+- Questions encouraged
+"""
+
+
+# ============== ADVANCED REMOTE TOPICS ==============
+
+ADVANCED_REMOTE_TOPICS = """
+# ADVANCED REMOTE WORK TOPICS
+
+## Digital Nomad Lifestyle
+
+### LOGISTICS
+**Legal Considerations:**
+- Visa requirements
+- Tax residency
+- Work permits
+- Banking access
+- Insurance (health, travel)
+
+**Practical Setup:**
+- Mail forwarding service
+- Virtual mailbox
+- International banking
+- Dual SIM phone
+- Reliable tech gear
+
+**Popular Destinations:**
+- Bali, Indonesia
+- Lisbon, Portugal
+- Mexico City, Mexico
+- Chiang Mai, Thailand
+- Medellin, Colombia
+- Dubai, UAE
+
+**Nomad Visas:**
+- 1-2 year programs
+- Multiple countries offering
+- Simplified tax/residency
+- Growing trend
+
+### PRODUCTIVITY ON THE ROAD
+**Challenges:**
+- Unreliable internet
+- Time zone chaos
+- Constant change
+- Travel fatigue
+- Loneliness
+
+**Solutions:**
+- Coworking spaces
+- Portable hotspot
+- Routines over locations
+- Slow travel (1-3 months)
+- Nomad communities
+
+## Remote Work for Different Roles
+
+### SOFTWARE DEVELOPMENT
+**Best Practices:**
+- Async code reviews
+- Pair programming (remote)
+- CI/CD pipelines
+- Documentation culture
+- Standups via Slack
+
+**Tools:**
+- GitHub/GitLab
+- Jira/Linear
+- Slack/Discord
+- Zoom for architecture discussions
+- Notion for specs
+
+### CUSTOMER SERVICE/SUPPORT
+**Setup:**
+- Quiet environment
+- Reliable headset
+- CRM access
+- Knowledge base
+- Escalation procedures
+
+**Challenges:**
+- Internet stability
+- Background noise
+- Time zones
+- Isolation
+
+### SALES
+**Remote Selling:**
+- Video calls vs. in-person
+- CRM discipline
+- Social selling (LinkedIn)
+- Virtual demos
+- Relationship building at distance
+
+### CREATIVE WORK
+**Design/Writing/Video:**
+- Large file sharing
+- Version control
+- Creative feedback
+- Time for deep work
+- Inspiration sources
+
+### TEACHING/COACHING
+**Online Education:**
+- Platform familiarity
+- Engagement techniques
+- Recording quality
+- Student interaction
+- Assessment methods
+
+## Remote Work Technologies
+
+### EMERGING TOOLS
+**AI-Powered:**
+- Meeting transcription (Otter, Fireflies)
+- AI writing assistants
+- Automated scheduling
+- Smart replies
+- Workflow automation
+
+**Virtual Reality:**
+- VR meetings (Horizon Workrooms)
+- Virtual offices (Gather, Teamflow)
+- 3D collaboration
+- Still emerging
+
+**Async Video:**
+- Loom
+- Dropbox Capture
+- Screen recording
+- Reduces meetings
+
+### AUTOMATION
+**Workflow Automation:**
+- Zapier, Make (Integromat)
+- n8n (open source)
+- Automate repetitive tasks
+- Connect tools
+
+**Email Automation:**
+- Filters and rules
+- Templates
+- Auto-responders
+- Newsletter tools
+
+**Meeting Automation:**
+- Calendar scheduling (Calendly)
+- Recording and transcription
+- Note-taking AI
+- Action item extraction
+
+## Future of Remote Work
+
+### TRENDS
+**Hybrid Normalization:**
+- Most companies hybrid
+- Hot-desking offices
+- Remote-first tools
+- Results-oriented cultures
+
+**Global Talent Market:**
+- Hire anywhere
+- Pay equity debates
+- Time zone teams
+- Cultural diversity
+
+**Regulation:**
+- Right to disconnect laws
+- Remote work legislation
+- Tax treaty updates
+- Workers rights
+
+**Technology:**
+- Better collaboration tools
+- AI integration
+- VR/AR workspaces
+- Async-first design
+
+### PREDICTIONS
+- 25-30% fully remote by 2030
+- Global payroll solutions
+- Professional remote work training
+- Specialized remote job boards
+- Remote work consultants
+
+## Remote Work Challenges & Solutions
+
+### ISOLATION
+**Solutions:**
+- Coworking spaces
+- Virtual coworking
+- Local meetups
+- Online communities
+- Regular video calls
+
+### CAREER ADVANCEMENT
+**Strategies:**
+- Document achievements
+- Regular 1-on-1s with manager
+- Internal visibility
+- External networking
+- Results focus
+
+### WORK-LIFE BOUNDARIES
+**Techniques:**
+- Physical separation
+- Time blocks
+- Rituals and routines
+- Device separation
+- Out-of-office enforcement
+
+### MANAGING DISTRACTIONS
+**Methods:**
+- Website blockers
+- Phone in another room
+- Focus music
+- Pomodoro technique
+- Clear workspace
+
+### STAYING VISIBLE
+**Approaches:**
+- Regular updates
+- Over-communication
+- Volunteer for projects
+- Internal blogging
+- Results documentation
+
+## Remote Work Resources
+
+### COMMUNITIES
+- Remote-First (Slack)
+- Nomad List (digital nomads)
+- We Work Remotely community
+- r/remotework (Reddit)
+- Remote Workers (LinkedIn)
+
+### JOB BOARDS
 - We Work Remotely
 - Remote.co
 - FlexJobs
 - Working Nomads
-- AngelList (startup remote)
-- LinkedIn (remote filter)
-
----
-
-## Performance Management
-
-### Goal Setting
-- **OKRs**: Objectives and Key Results
-- **SMART goals**: Specific, Measurable, Achievable, Relevant, Time-bound
-- **Visible**: Shared with team
-- **Regular review**: Quarterly check-ins
-
-### Feedback
-- **Continuous**: Not just annual review
-- **Specific**: Behavior and impact
-- **Timely**: Close to event
-- **Two-way**: Listen to their experience
-
-### Career Development
-- **Learning budget**: Courses, conferences
-- **Mentorship**: Internal or external
-- **Stretch assignments**: Growth opportunities
-- **Promotion paths**: Clear criteria
-
----
-
-## Remote Work Policies
-
-### Essential Policies
-- **Core hours**: When overlap required
-- **Availability**: Response time expectations
-- **Time off**: Unlimited vs. accrued
-- **Equipment**: What company provides
-- **Internet**: Reimbursement policy
-- **Workspace**: Stipend for home office
-- **Travel**: Approval process
-- **Security**: Data protection rules
-
-### Creating Policies
-- **Collaborative**: Input from team
-- **Clear**: No ambiguity
-- **Documented**: Handbook
-- **Flexible**: Allow for individual needs
-- **Reviewed**: Update regularly
-
----
-
-## Legal and Compliance
-
-### Employment Law
-- **Where employees work**: Affects labor laws
-- **Tax implications**: Payroll taxes by location
-- **Benefits**: Health insurance across states/countries
-- **Time tracking**: Some jurisdictions require
-
-### Data Security
-- **VPN**: Required for sensitive data
-- **Device management**: Company devices vs. BYOD
-- **Access control**: Least privilege
-- **Training**: Security awareness
-- **Incident response**: Breach procedures
-
-### International Considerations
-- **Employer of Record (EOR)**: Deel, Remote, Papaya Global
-- **Contractors vs. employees**: Tax and legal differences
-- **Visas**: Work permits for nomads
-- **Data residency**: GDPR, data location rules
-
----
-
-## Advanced Remote Topics
-
-### Async Communication Mastery
-- **Async standups**: Written updates, no meeting
-- **Decision making**: RFCs (Request for Comments)
-- **Brainstorming**: Shared docs, comment threads
-- **Status updates**: Automated dashboards
-- **Documentation**: Living documents
-
-### Remote-First Design
-- **Default to remote**: Even if some in office
-- **Meeting-free days**: Deep work protection
-- **Documentation**: Critical information written
-- **Transparency**: Open by default
-- **Inclusion**: Remote workers not afterthought
-
-### Managing Global Teams
-- **Time zone map**: Visual team location
-- **Rotating meetings**: Share inconvenience
-- **Async workflows**: Reduce real-time need
-- **Cultural awareness**: Holidays, customs
-- **Language**: Clear communication, translation tools
-
-### Remote Work Trends
-- **Hybrid is here to stay**: Most companies
-- **Async is the future**: Written over meetings
-- **Global talent**: Hiring anywhere
-- **Results over presence**: Output matters
-- **Digital nomad visas**: Countries competing
-- **Remote work tools**: Constant innovation
-"""
-
-
-# ============== SPECIFIC REMOTE ROLES ==============
-
-REMOTE_ROLES = """
-# REMOTE WORK BY ROLE/INDUSTRY
-
-## Software Development
-**Remote-Friendly Score: 10/10**
-
-### Setup
-- Multiple monitors (2-3)
-- Good keyboard/mouse
-- Fast internet (50+ Mbps)
-- Quiet space for focus
-- Git, IDE, terminal
-
-### Collaboration
-- GitHub/GitLab
-- Slack/Discord
-- Zoom for pairing
-- Linear/Jira
-- Notion/Confluence
-
-### Best Practices
-- Async standups
-- Code review culture
-- Documentation
-- CI/CD for remote deployment
-- Time blocking for deep work
-
----
-
-## Design (UX/UI/Graphic)
-**Remote-Friendly Score: 10/10**
-
-### Setup
-- Color-accurate monitor
-- Graphics tablet
-- Good lighting
-- Inspiration board
-
-### Tools
-- Figma (collaborative design)
-- Adobe Creative Suite
-- Miro (whiteboarding)
-- Dropbox/Google Drive (assets)
-
-### Collaboration
-- Design critiques via video
-- Shared Figma files
-- Async feedback
-- Design systems documentation
-
----
-
-## Writing/Content Creation
-**Remote-Friendly Score: 10/10**
-
-### Setup
-- Distraction-free environment
-- Good keyboard
-- Research access
-- Second monitor for research
-
-### Tools
-- Google Docs/Notion
-- Grammarly
-- Hemingway Editor
-- Obsidian (notes)
-
-### Collaboration
-- Editorial calendars
-- Clear briefs
-- Async feedback
-- Version control
-
----
-
-## Marketing/Social Media
-**Remote-Friendly Score: 9/10**
-
-### Setup
-- Multiple monitors (analytics + content)
-- Good phone for mobile testing
-- Camera for content creation
-
-### Tools
-- Buffer/Hootsuite (scheduling)
-- Canva/Figma (graphics)
-- Google Analytics
-- SEMrush/Ahrefs (SEO)
-
-### Collaboration
-- Content calendars
-- Approval workflows
-- Brand guidelines
-- Campaign briefs
-
----
-
-## Customer Support
-**Remote-Friendly Score: 8/10**
-
-### Setup
-- Quiet space (phone calls)
-- Good headset
-- Reliable internet
-- Distraction-free
-
-### Tools
-- Zendesk/Freshdesk
-- Intercom
-- Slack
-- CRM (Salesforce, HubSpot)
-
-### Challenges
-- Isolation
-- Difficult customers alone
-- Need for team connection
-- Shift coverage across time zones
-
----
-
-## Sales
-**Remote-Friendly Score: 7/10**
-
-### Setup
-- Professional background
-- Good lighting
-- CRM access
-- Call recording capability
-
-### Tools
-- Salesforce/HubSpot
-- Zoom/Meet
-- LinkedIn Sales Navigator
-- Gong/Chorus (call analysis)
-
-### Challenges
-- Building trust remotely
-- Closing without in-person
-- Need for occasional travel
-- Self-motivation critical
-
----
-
-## Teaching/Online Education
-**Remote-Friendly Score: 9/10**
-
-### Setup
-- Good lighting
-- Quality microphone
-- Second camera (document camera)
-- Whiteboard or tablet
-
-### Tools
-- Zoom/Teams
-- Google Classroom
-- LMS (Canvas, Moodle)
-- Kahoot/Mentimeter
-
-### Best Practices
-- Engagement strategies
-- Breakout rooms
-- Interactive elements
-- Clear expectations
-
----
-
-## Healthcare (Telehealth)
-**Remote-Friendly Score: 6/10**
-
-### Setup
-- HIPAA-compliant space
-- Secure internet
-- Professional background
-- Good lighting
-
-### Tools
-- Doxy.me
-- Teladoc
-- Secure messaging
-- EHR access
-
-### Regulations
-- HIPAA compliance
-- State licensing
-- Prescription rules
-- Insurance reimbursement
-
----
-
-## Consulting/Freelancing
-**Remote-Friendly Score: 10/10**
-
-### Setup
-- Professional video presence
-- Client meeting space
-- Project management tools
-- Invoicing system
-
-### Tools
-- Notion/Obsidian
-- Toggl (time tracking)
-- QuickBooks/FreshBooks
-- Calendly
-
-### Business Skills
-- Client acquisition
-- Proposal writing
-- Contract negotiation
-- Time management
-- Financial planning
+- Remotive
+
+### TOOLS & RESOURCES
+- Remote-First (handbook)
+- GitLab Remote Playbook
+- Basecamp's guides
+- Zapier's remote guide
+- Trello's remote work guide
+
+### NEWSLETTERS
+- Remote Work Weekly
+- The Remote Report
+- Remotive.io newsletter
+- FlexJobs newsletter
 """
 
 
@@ -1091,48 +1084,48 @@ async def main():
     
     print("\n1. REMOTE WORK FOUNDATIONS")
     print("-" * 40)
-    print("   Types: Fully remote, hybrid, distributed, digital nomad")
-    print("   Benefits and challenges")
-    print("   Work-life boundaries")
+    print("   Benefits for workers, companies, society")
+    print("   Types: Fully remote, hybrid, freelance")
+    print("   Common challenges and solutions")
     
-    print("\n2. SETTING UP REMOTE WORK")
+    print("\n2. REMOTE WORK SETUP")
     print("-" * 40)
-    print("   Home office ergonomics and equipment")
-    print("   Daily routines and productivity systems")
-    print("   Communication best practices")
-    print("   Time management across zones")
+    print("   Home office essentials")
+    print("   Ergonomics and health")
+    print("   Technology stack")
+    print("   Boundaries and routines")
     
-    print("\n3. REMOTE WORK TOOLS")
+    print("\n3. REMOTE WORK SKILLS")
     print("-" * 40)
-    print("   Communication: Zoom, Slack, email")
-    print("   Project management: Notion, Asana, Trello")
-    print("   Productivity: Toggl, Freedom, automation")
-    print("   Security: VPN, password managers, 2FA")
+    print("   Self-management and productivity")
+    print("   Digital and communication skills")
+    print("   Collaboration and continuous learning")
     
-    print("\n4. REMOTE TEAM LEADERSHIP")
+    print("\n4. MANAGING REMOTE TEAMS")
     print("-" * 40)
-    print("   Managing distributed teams")
+    print("   Trust-based leadership")
     print("   Building remote culture")
-    print("   Hiring and onboarding remotely")
+    print("   Hiring and onboarding")
     print("   Performance management")
     
-    print("\n5. ROLE-SPECIFIC REMOTE WORK")
+    print("\n5. ADVANCED REMOTE TOPICS")
     print("-" * 40)
-    print("   Software dev, design, writing")
-    print("   Marketing, support, sales")
-    print("   Teaching, consulting, healthcare")
+    print("   Digital nomad lifestyle")
+    print("   Role-specific remote work")
+    print("   Emerging technologies")
+    print("   Future of remote work")
     
     print("\n" + "=" * 70)
-    print("READY TO COACH REMOTE WORK")
+    print("READY FOR REMOTE WORK SUCCESS")
     print("=" * 70)
     print("\nCapabilities:")
     print("  ✅ Set up optimal home office")
-    print("  ✅ Implement productivity systems")
-    print("  ✅ Master remote communication")
-    print("  ✅ Lead distributed teams")
-    print("  ✅ Coach any profession to work remotely")
-    print("  ✅ Balance work and life at home")
-    print("\nEquipped to help anyone succeed in remote work!")
+    print("  ✅ Maximize productivity remotely")
+    print("  ✅ Build and manage remote teams")
+    print("  ✅ Coach others on remote work success")
+    print("  ✅ Navigate remote work challenges")
+    print("  ✅ Lead distributed teams effectively")
+    print("\nExpert in all aspects of remote work!")
 
 
 if __name__ == "__main__":
