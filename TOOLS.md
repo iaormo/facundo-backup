@@ -71,6 +71,7 @@
 - #new-channel (1469895051575300217): New client/channel
 - #ysa-channel (1469896160687820965): Ysa's channel
 - #basty-channel (1469916704472694968): Sebastian's channel
+- #social-content (1470257252534321349): Daily social media posts
 - #lead-generation (1469566862403702930): Lead generation tasks and campaigns
 - #sales-and-marketing (1469566918737395818): Sales and marketing tasks
 - #development (1469566955093757993): All development work
