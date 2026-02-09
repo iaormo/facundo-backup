@@ -73,6 +73,7 @@
 - #basty-channel (1469916704472694968): Sebastian's channel
 - #social-content (1470257252534321349): Daily social media posts
 - #va-coaching (1470266509967360041): VA coaching for remote workers
+- #heidi-channel (1470276736066519164): Heidi's channel - family access
 - #lead-generation (1469566862403702930): Lead generation tasks and campaigns
 - #sales-and-marketing (1469566918737395818): Sales and marketing tasks
 - #development (1469566955093757993): All development work
