@@ -102,7 +102,7 @@
 - Runs daily at 09:00 Asia Manila time (01:00 UTC)
 - Defensive security drills in STAGING only
 - Read only monitoring of security logs and alerts
-- Output posted to #security-ops channel
+- Output posted to #security channel
 - **Includes prompt injection defense testing**
 
 ### Sentinel Drill Scenarios
@@ -133,7 +133,7 @@
 ### Sentinel Weekly Hygiene Check
 **Job ID:** 523aa03b-2fee-493f-94f3-fbef879a21c0
 **Schedule:** Weekly, Mondays at 09:00 Asia Manila time
-**Output:** #security-ops channel
+**Output:** #security channel
 
 **Automated checks I can perform:**
 - Discord bot token age audit (flag any >90 days old)
