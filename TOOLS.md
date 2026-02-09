@@ -23,6 +23,12 @@
 - Heidi (hedz): [pending]
 - Sebastian: [pending - when he gets Discord]
 
+**API Keys Stored in Notion:**
+- OpenAI API: Audio transcription
+- Notion API: Database integration
+- Apollo API: Lead generation (rJPe_KyW-CK8OykaxcEG-A)
+- Discord Bot: Configured in OpenClaw
+
 **Approved Counseling DM Users:**
 - User 1: 1466153534599729164
 - User 2: 871334136252629072
