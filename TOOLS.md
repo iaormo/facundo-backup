@@ -23,6 +23,15 @@
 - Heidi (hedz): [pending]
 - Sebastian: [pending - when he gets Discord]
 
+**Family Finance Tracker Whitelist:**
+- Papi (Ian): 865834513502175252
+- Heidi (hedz): 1470641839047442465
+
+**Finance Tracker Access:**
+- ONLY respond to financial queries from whitelisted family members
+- Report all financial tracking to #family-chat for transparency
+- Track expenses, budgets, payouts, and financial summaries
+
 **API Keys Stored in Notion:**
 - OpenAI API: Audio transcription
 - Notion API: Database integration
