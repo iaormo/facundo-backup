@@ -20,7 +20,7 @@
 - Papi (Ian): 865834513502175252
 - Ynigo: 861970854908919829
 - Ysa: 861971141127700532
-- Heidi (hedz): [pending]
+- Heidi (hedz): 1470738326540521596
 - Sebastian: [pending - when he gets Discord]
 
 **Family Finance Tracker Whitelist:**
