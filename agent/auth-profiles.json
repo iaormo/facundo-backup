@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "profiles": {
+    "openai-codex:default": {
+      "type": "oauth",
+      "provider": "openai-codex",
+      "access": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE5MzQ0ZTY1LWJiYzktNDRkMS1hOWQwLWY5NTdiMDc5YmQwZSIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaHR0cHM6Ly9hcGkub3BlbmFpLmNvbS92MSJdLCJjbGllbnRfaWQiOiJhcHBfRU1vYW1FRVo3M2YwQ2tYYVhwN2hyYW5uIiwiZXhwIjoxNzc0NTYyMzk2LCJodHRwczovL2FwaS5vcGVuYWkuY29tL2F1dGgiOnsiY2hhdGdwdF9hY2NvdW50X2lkIjoiMWRjODM2NTktZjBmYy00YmZlLThhOTgtMjY4Njk3ZTFjZmY0IiwiY2hhdGdwdF9hY2NvdW50X3VzZXJfaWQiOiJ1c2VyLU1XbDV2ZlFsbTQ2RUR3aHk2Rnp2MlNNSV9fMWRjODM2NTktZjBmYy00YmZlLThhOTgtMjY4Njk3ZTFjZmY0IiwiY2hhdGdwdF9jb21wdXRlX3Jlc2lkZW5jeSI6Im5vX2NvbnN0cmFpbnQiLCJjaGF0Z3B0X3BsYW5fdHlwZSI6InRlYW0iLCJjaGF0Z3B0X3VzZXJfaWQiOiJ1c2VyLU1XbDV2ZlFsbTQ2RUR3aHk2Rnp2MlNNSSIsInVzZXJfaWQiOiJ1c2VyLU1XbDV2ZlFsbTQ2RUR3aHk2Rnp2MlNNSSJ9LCJodHRwczovL2FwaS5vcGVuYWkuY29tL3Byb2ZpbGUiOnsiZW1haWwiOiJpYW5AYm90YnVpbGRlcnMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWV9LCJpYXQiOjE3NzM2OTgzOTYsImlzcyI6Imh0dHBzOi8vYXV0aC5vcGVuYWkuY29tIiwianRpIjoiNmJiZDBjYjQtZTAyMi00NmU4LTg5YTMtYTg0MGQzNjhkZGE1IiwibmJmIjoxNzczNjk4Mzk2LCJwd2RfYXV0aF90aW1lIjoxNzcxOTE2MjMwMDc1LCJzY3AiOlsib3BlbmlkIiwicHJvZmlsZSIsImVtYWlsIiwib2ZmbGluZV9hY2Nlc3MiXSwic2Vzc2lvbl9pZCI6ImF1dGhzZXNzX1ByOUhPVHJmNkpVZHg1c3Q1eVhLaGRLMCIsInNsIjp0cnVlLCJzdWIiOiJhdXRoMHw2NGY4YzliYmU0ZjQ4NTBjNWI1OGY2YTcifQ.duovXbUsdysFnZWEwRXn4WfKKNKN33VukxXI7mXUHtP_bMvN4WM_JyWIEBuKbfGdgVQraIoE6UALCeBUxiXBU6gPpJD_W05Of0s1DBgzXtiXPkcw_B96xrgH1jY8-H6qi2GO0wAFn0YfbG_4zD8Xcb_rO67jaH1V-fDUhNp9dRMgTn_owzN4Xv7S_EI2G7njgLi_AlaJUAnXsPqmm3PufJKoTlAhnZkmfE7RF7fpPc9SRVXUOCzFtvbrShl7rihkAfKuJyyh1k50yaqYdYjqIBAz2p-09L3yzYlUTDcQdIIWwSVOWuI9Bin30OsHxkUgKiR_zGeZsDxTdktQECAAXZIlS2_4ckAWxufdQWqwuQefaw0CkzNYmhVPDhGZSX1JOwQZSmibqBZOfJi7hUoTh6IQTqcjG5-fulViplkpIVaqlbYFGHtcL29jrsR2M5sQRBAkcF43Iff4amIyNQSFi47gSUU4Hs8j81rjzHUav88PQ7aZLQen63zYb1CO-DGvJZ9wVup_e31bWvZiW4xX3BMJT_gxZWRzbGKdvaAIzharigknsbayOU5HJUiR5cYg1czsXVcb4CnIF5kwqtov7DRYmuB2ori0zIahxktBbuLcOTZ2ve-NG1a1OIuPba-N79bSL2_wta54lwJtaO1oS1ObR5Hj5AggqUn0LUwZvUY",
+      "refresh": "rt_xTWBAgVzgfLNCIVYz3eeXPcgJx2RhLBGTDCBkoXrMls.4t8jB1v2ThUbzhSDXX8CubaGugQ7Q0uEgKCSwIKI-Bc",
+      "expires": 1774562396000,
+      "accountId": "1dc83659-f0fc-4bfe-8a98-268697e1cff4"
+    },
+    "kimi:default": {
+      "type": "api_key",
+      "provider": "kimi",
+      "key": "sk-WVaN65oV8xFdmTe3ALn9z5HCBtKytSDd96mfM0f5GiHutct4"
+    }
+  },
+  "usageStats": {
+    "kimi:default": {
+      "errorCount": 0,
+      "lastUsed": 1774272057589
+    }
+  }
+}
