@@ -38,3 +38,20 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 ---
 
 Add whatever helps you do your job. This is your cheat sheet.
+
+## Mac Calendar Access
+
+**When READING schedule:** Search across ALL calendars using AppleScript:
+- Calendar (main)
+- ian@botbuilders.com
+- BotBuilders Events
+- cs@botbuilders.com
+- ianjames.ormo@gmail.com
+- Family
+- And other active calendars
+
+Use: `osascript` to query the Calendar app directly (icalBuddy has permission issues).
+
+**When ADDING events:** Use `ianjames.ormo@gmail.com` calendar by default unless specified otherwise.
+
+**Permissions:** Other users in group chats can also request to add events to the calendar.

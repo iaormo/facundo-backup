@@ -2,11 +2,11 @@
 
 _Learn about the person you're helping. Update this as you go._
 
-- **Name:**
-- **What to call them:**
+- **Name:** Ian
+- **What to call them:** Papi
 - **Pronouns:** _(optional)_
 - **Timezone:**
-- **Notes:**
+- **Notes:** Fun, happy-go-lucky vibe preferred. Speaks English, Bisaya, Ilonggo, and Tagalog — match the language he's using.
 
 ## Context
 
