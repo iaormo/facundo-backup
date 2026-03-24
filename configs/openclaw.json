@@ -161,8 +161,6 @@
         "camera.clip",
         "screen.record",
         "contacts.add",
-        "calendar.add",
-        "reminders.add",
         "sms.send"
       ]
     }
