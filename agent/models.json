@@ -27,7 +27,8 @@
             "cacheWrite": 0
           },
           "contextWindow": 262144,
-          "maxTokens": 32768
+          "maxTokens": 32768,
+          "api": "anthropic-messages"
         },
         {
           "id": "k2p5",
@@ -70,9 +71,59 @@
           },
           "contextWindow": 262144,
           "maxTokens": 8192,
+          "api": "openai-completions",
           "compat": {
             "supportsUsageInStreaming": true
           }
+        }
+      ]
+    },
+    "google": {
+      "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+      "apiKey": "NEEDS_KEY",
+      "api": "google-generative-ai",
+      "models": [
+        {
+          "id": "gemini-2.5-flash",
+          "name": "Gemini 2.5 Flash",
+          "reasoning": false,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1048576,
+          "maxTokens": 65536,
+          "api": "google-generative-ai"
+        }
+      ]
+    },
+    "groq": {
+      "baseUrl": "https://api.groq.com/openai/v1",
+      "apiKey": "NEEDS_KEY",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "llama-3.3-70b-versatile",
+          "name": "Llama 3.3 70B",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 131072,
+          "maxTokens": 32768,
+          "api": "openai-completions"
         }
       ]
     }

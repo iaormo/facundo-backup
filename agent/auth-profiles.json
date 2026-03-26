@@ -17,8 +17,13 @@
   },
   "usageStats": {
     "kimi:default": {
-      "errorCount": 0,
-      "lastUsed": 1774272057589
+      "errorCount": 1,
+      "lastUsed": 1774272057589,
+      "failureCounts": {
+        "auth": 1
+      },
+      "lastFailureAt": 1774446300477,
+      "cooldownUntil": 1774446360477
     }
   }
 }
